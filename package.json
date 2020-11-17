@@ -1,0 +1,11 @@
+
+  {
+    "name": "yardsalelocator",
+    "version": "1.0.0",
+    "scripts": {
+      "setup": "npm run setup:client && npm run setup:server",
+      "setup:client": "cd yardsalelocator.client && npm i",
+      "setup:server": "cd yardsalelocator.server && npm i"
+    }
+  }
+  
