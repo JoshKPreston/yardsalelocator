@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
-import ValueSchema from '../models/Value'
+import ListingSchema from '../models/Listing'
 import ProfileSchema from '../models/Profile'
 
 class DbContext {
-  Values = mongoose.model('Value', ValueSchema);
-  Profile = mongoose.model('Profile', ProfileSchema);
+  Listing= mongoose.model('listing', ListingSchema);
+  Profile = mongoose.model('profile', ProfileSchema);
 }
 
 export const dbContext = new DbContext()
