@@ -6,25 +6,29 @@ const Listing = new Schema(
     address: { type: String, required: true },
     lat: { type: String, required: true },
     long: { type: String, required: true },
-    startDate: { type: String, required: true },
-    daysOpen: { type: Number, required: true },
+    startDate: { type: Date, required: true },
+    daysOpen: { type: Number, required: true, default: 1 },
     isOpen: { type: Boolean, default: false },
     tags: { type: Array },
     img: { type: String },
     description: { type: String },
-    creatorId: { type: String, ref: 'Profile', required: true }
+    profile: { type: String, ref: 'Profile', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
 Listing.virtual('creator', {
-  localField: 'creatorId',
+  localField: 'profile',
   ref: 'Profile',
   foreignField: '_id',
   justOne: true
 })
 
 export default Listing
+
+// "formattedAddress": "8455 W Westpark St, Boise, ID 83704 USA",
+// "latitude": 43.606633
+// "longitude": -116.285809
 
 //       "latitude": 40.7041,
 //       "longitude": -73.9867,

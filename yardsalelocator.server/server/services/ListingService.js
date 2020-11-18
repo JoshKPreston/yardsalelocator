@@ -3,7 +3,7 @@ import { BadRequest } from '../utils/Errors'
 
 class ListingService {
   async getAll(query = {}) {
-    const listing = await dbContext.Listing.find(query)
+    const listing = await dbContext.Listing.find(query).populate('profile')
     return listing
   }
 

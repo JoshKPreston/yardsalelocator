@@ -3,8 +3,8 @@ import ListingSchema from '../models/Listing'
 import ProfileSchema from '../models/Profile'
 
 class DbContext {
-  Listing= mongoose.model('listing', ListingSchema);
-  Profile = mongoose.model('profile', ProfileSchema);
+  Listing= mongoose.model('Listing', ListingSchema);
+  Profile = mongoose.model('Profile', ProfileSchema);
 }
 
 export const dbContext = new DbContext()
