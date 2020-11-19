@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import { authHeader } from '../AuthConfig'
 
 const baseURL = window.location.origin.includes('localhost') ? 'http://localhost:3000' : ''
 export const api = Axios.create({
@@ -13,8 +14,9 @@ export const radarApi = Axios.create({
 export const setBearer = function(bearer) {
   api.defaults.headers.authorization = bearer
 }
+
 export const setAuth = function() {
-  radarApi.defaults.headers.authorization = 'prj_test_pk_84c02a43b10a046d097af851761c145f54316090'
+  radarApi.defaults.headers.authorization = authHeader
 }
 
 export const resetBearer = function() {

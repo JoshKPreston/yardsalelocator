@@ -14,11 +14,10 @@ class ListingService {
   async getDistance(origin, destination) {
     try {
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
-      console.log(res.data.routes.car.distance.text)
       const index = AppState.listings.findIndex(l => l === destination)
-      AppState.listings[index].distance = res.data.routes.car.distance.text
-      // listing.distance = res.data.routes.car.distance.text
-      // AppState.listingsDistance = res.data
+      if (index >= 0) {
+        AppState.listings[index].distance = res.data.routes.car.distance.text
+      }
     } catch (error) {
       logger.error(error)
     }

@@ -9,6 +9,7 @@
 import { computed, onMounted } from 'vue'
 import { listingService } from '../services/ListingService'
 import { AppState } from '../AppState'
+/* eslint-disable vue/require-default-prop */
 
 export default {
   name: 'ListingComponent',
