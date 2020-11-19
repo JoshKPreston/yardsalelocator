@@ -4,6 +4,9 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   user: {},
   profile: {},
-  userLocation: {},
+  userLocation: {
+    latitude: Number,
+    longitude: Number
+  },
   listings: []
 })

@@ -36,7 +36,7 @@
 
         <div class="dropdown" v-else>
           <div
-            class="dropdown-toggle"
+            class="dropdown-toggle text-dark"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
@@ -75,6 +75,7 @@ import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
+import router from '../router'
 export default {
   name: 'Navbar',
   setup() {
@@ -88,6 +89,7 @@ export default {
       user: computed(() => AppState.user),
       async login() {
         AuthService.loginWithPopup()
+        router.push({ name: 'Profile' })
       },
       async logout() {
         await AuthService.logout({ returnTo: window.location.origin })

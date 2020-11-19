@@ -5,7 +5,7 @@
     </div>
     <div class="row justify-content-center top-margin w-100">
       <div class="col">
-        <button class="btn btn-primary" @click.prevent="getLocation()">
+        <button class="btn btn-primary" form="advanced-search">
           <h4>Find Near Me</h4>
         </button>
         <div id="geo-location"></div>
@@ -23,25 +23,29 @@
         </div>
         <div class="collapse col-12" id="advancedSearchCollapse">
           <div class="card card-body">
-            <form class="form-group" @submit.prevent="">
+            <form id="advanced-search" class="form-group" @submit.prevent="getLocation()">
               <input type="text"
                      class="form-control"
                      aria-describedby="helpId"
-                     placeholder="Address"
+                     placeholder="Address, City"
+                     v-model="state.advancedSearch.address"
               >
               <input type="text"
                      class="form-control mt-2"
                      aria-describedby="helpId"
                      placeholder="Tags"
+                     v-model="state.advancedSearch.tags"
               >
               <input type="range"
                      min="1"
+                     id="slider"
                      max="20"
                      class="slider mt-2"
-                     value="5"
                      aria-label="Distance"
                      aria-describedby="helpId"
+                     v-model="state.advancedSearch.slider"
               >
+              <span id="f">{{ state.advancedSearch.slider }} miles</span>
             </form>
           </div>
         </div>
@@ -58,17 +62,39 @@
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import router from '../router'
+import { reactive, onMounted } from 'vue'
+import { listingService } from '../services/ListingService'
+import { setAuth } from '../services/AxiosService'
 
 export default {
   name: 'Home',
   setup() {
+    onMounted(async() => {
+      await setAuth()
+    })
+    const state = reactive({
+      advancedSearch: {
+        slider: 5,
+        address: '',
+        tags: []
+      }
+    })
     return {
+
+      state,
       getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.showPosition)
-          router.push({ name: 'Results' })
+        if (!state.advancedSearch.address) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.showPosition)
+            router.push({ name: 'Results' })
+          } else {
+            document.getElementById('geo-location').innerText = 'Geolocation is not supported by this browser.'
+          }
         } else {
-          document.getElementById('geo-location').innerText = 'Geolocation is not supported by this browser.'
+          listingService.getCoordinates(state.advancedSearch)
+          router.push({ name: 'Results' })
+
+          // listingService.getCoordinates(address)
         }
       },
       showPosition(position) {

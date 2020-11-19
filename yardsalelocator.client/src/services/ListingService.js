@@ -22,5 +22,26 @@ class ListingService {
       logger.error(error)
     }
   }
+
+  // async getCoordinates(newAddress) {
+  //   try {
+  //     const res = await radarApi.get('geocode/forward?query=' + newAddress)
+  //     AppState.userLocation = res.data
+  //   } catch (error) {
+  //     logger.error(error)
+  //   }
+  // }
+
+  async getCoordinates(newAddress) {
+    try {
+      const res = await radarApi.get('search/autocomplete?query=' + newAddress.address)
+      AppState.userLocation.latitude = res.data.addresses[0].latitude
+      AppState.userLocation.longitude = res.data.addresses[0].longitude
+      console.log(AppState.userLocation)
+      // AppState.userLocation = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 export const listingService = new ListingService()
