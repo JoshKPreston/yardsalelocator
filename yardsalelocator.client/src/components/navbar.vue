@@ -1,12 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand navbar-dark bg-transparent">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
       </div>
     </router-link>
     <button
@@ -18,18 +13,15 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon" />
+      <span class="navbar-toggler-icon bg-dark" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item" v-if="route.name === 'Results'">
           <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
+            <p class="text-dark">
+              Back
+            </p>
           </router-link>
         </li>
       </ul>
@@ -82,14 +74,17 @@
 import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
   name: 'Navbar',
   setup() {
+    const route = useRoute()
     const state = reactive({
       dropOpen: false
     })
     return {
       state,
+      route,
       user: computed(() => AppState.user),
       async login() {
         AuthService.loginWithPopup()
