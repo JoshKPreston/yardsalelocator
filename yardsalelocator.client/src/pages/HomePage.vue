@@ -82,7 +82,7 @@ export default {
     return {
 
       state,
-      getLocation() {
+      async getLocation() {
         if (!state.advancedSearch.address) {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.showPosition)
@@ -91,10 +91,8 @@ export default {
             document.getElementById('geo-location').innerText = 'Geolocation is not supported by this browser.'
           }
         } else {
-          listingService.getCoordinates(state.advancedSearch)
+          await listingService.getCoordinates(state.advancedSearch.address)
           router.push({ name: 'Results' })
-
-          // listingService.getCoordinates(address)
         }
       },
       showPosition(position) {

@@ -13,6 +13,7 @@ class ListingService {
 
   async getDistance(origin, destination) {
     try {
+      console.log(origin)
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
       const index = AppState.listings.findIndex(l => l === destination)
       if (index >= 0) {
@@ -34,7 +35,7 @@ class ListingService {
 
   async getCoordinates(newAddress) {
     try {
-      const res = await radarApi.get('search/autocomplete?query=' + newAddress.address)
+      const res = await radarApi.get('search/autocomplete?query=' + newAddress)
       AppState.userLocation.latitude = res.data.addresses[0].latitude
       AppState.userLocation.longitude = res.data.addresses[0].longitude
       console.log(AppState.userLocation)
