@@ -42,6 +42,7 @@ class LocationService {
       AppState.userLocation.latitude = res.data.addresses[0].latitude
       AppState.userLocation.longitude = res.data.addresses[0].longitude
       AppState.userLocation.distance = newAddress.distance
+      AppState.userLocation.formattedAddress = res.data.addresses[0].formattedAddress
       // AppState.userLocation.distance = newAddress.distance
       // eslint-disable-next-line no-console
       console.log(AppState.userLocation)

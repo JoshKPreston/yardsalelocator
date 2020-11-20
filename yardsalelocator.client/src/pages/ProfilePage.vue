@@ -16,6 +16,7 @@
       role="button"
       aria-expanded="false"
       aria-controls="currentListings"
+      v-if="listings.length !== 0"
     >
       <div class="col-1 d-flex justify-content-start">
         <span class="d-block"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
@@ -44,6 +45,7 @@
       role="button"
       aria-expanded="false"
       aria-controls="newListing"
+      v-if="listings.length === 0"
     >
       <div class="col-1 d-flex justify-content-start">
         <span class="d-block"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
@@ -58,23 +60,23 @@
       id="newListing"
       class="post-new-listing row justify-content-start align-items-center w-100 collapse"
     >
-      <form @submit.prevent="create(state.newListing)" class="form-row">
+      <form @submit.prevent="createListing()" class="form-row">
         <!-- address -->
         <div class="form-group col-12">
           <input
-            :v-model="state.newListing.address"
+            v-model="state.newListing.address"
             type="text"
             name="newListingAddress"
             id="newListingAddress"
             class="form-control"
-            placeholder="Address"
+            placeholder="Address, City, Zip"
             aria-describedby="helpId"
           />
         </div>
         <!-- start date -->
         <div class="form-group col-12">
           <input
-            :v-model="state.newListing.startDate"
+            v-model="state.newListing.startDate"
             type="date"
             name="newListingStartDate"
             id="newListingStartDate"
@@ -93,7 +95,8 @@
               type="radio"
               name="inlineRadioOptions"
               id="newListingDaysOpenOne"
-              value="option1"
+              :value="1"
+              v-model="state.newListing.daysOpen"
             />
             <label class="form-check-label" for="newListingDaysOpenOne">1</label>
           </div>
@@ -103,7 +106,8 @@
               type="radio"
               name="inlineRadioOptions"
               id="newListingDaysOpenTwo"
-              value="option2"
+              :value="2"
+              v-model="state.newListing.daysOpen"
             />
             <label class="form-check-label" for="newListingDaysOpenTwo">2</label>
           </div>
@@ -113,7 +117,8 @@
               type="radio"
               name="inlineRadioOptions"
               id="newListingDaysOpenThree"
-              value="option3"
+              :value="3"
+              v-model="state.newListing.daysOpen"
             />
             <label class="form-check-label" for="newListingDaysOpenThree">3</label>
           </div>
@@ -159,7 +164,7 @@
         <!-- description -->
         <div class="form-group col-12">
           <textarea
-            :v-model="state.newListing.description"
+            v-model="state.newListing.description"
             rows="3"
             type="text"
             name="newListingDescription"
@@ -223,7 +228,14 @@ export default {
       await listingService.getAll()
     })
     const state = reactive({
-      newListing: {}
+      newListing: {
+        address: '',
+        startDate: Date,
+        daysOpen: 1,
+        tags: [],
+        isOpen: false,
+        description: ''
+      }
     })
     return {
       state,
@@ -231,12 +243,13 @@ export default {
       profile: computed(() => AppState.profile),
       listings: computed(() => AppState.listings.filter(listing => listing.profile.email === AppState.profile.email)),
       // TODO need to finish passing the form to create new listing, sorry brain is fried it's 4am
-      async create(newListing) {
-        await listingService.getCoordinates(newListing.address)
-        newListing.lat = AppState.userLocation.latitude
-        newListing.long = AppState.userLocation.longitude
-        logger.log(newListing)
-        listingService.create(newListing)
+      async createListing() {
+        await locationService.getCoordinates(state.newListing.address)
+        state.newListing.lat = AppState.userLocation.latitude
+        state.newListing.long = AppState.userLocation.longitude
+        state.newListing.address = AppState.userLocation.formattedAddress
+        logger.log(state.newListing)
+        await listingService.create(state.newListing)
       }
     }
   }

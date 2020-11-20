@@ -7,7 +7,9 @@ export const AppState = reactive({
   userLocation: {
     latitude: null,
     longitude: null,
-    distance: null
+    distance: null,
+    formattedAddress: null
   },
-  listings: []
+  listings: [],
+  currentListing: {}
 })

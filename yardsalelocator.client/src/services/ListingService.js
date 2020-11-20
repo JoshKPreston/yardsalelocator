@@ -11,6 +11,15 @@ class ListingService {
     }
   }
 
+  async getListing(id) {
+    try {
+      const res = await api.get('api/listing/' + id)
+      AppState.currentListing = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
   async getDistance(origin, destination) {
     try {
       // eslint-disable-next-line no-console
@@ -27,7 +36,7 @@ class ListingService {
 
   async create(newListing) {
     try {
-      const res = await api.post('', newListing)
+      const res = await api.post('api/listing', newListing)
       AppState.listings = [...AppState.listings, res.data]
     } catch (error) {
       logger.error(error)
