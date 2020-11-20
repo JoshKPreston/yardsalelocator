@@ -1,14 +1,20 @@
 <template>
-  <div class="listing-component col-12" v-if="listing.distance">
-    {{ listing.address }}
-    <p>Distance: {{ listing.distance }}</p>
+  <div class="listing-component row justify-content-start border-top p-3" v-if="listing.distance">
+    <div class="col-12">
+      <li>
+        {{ listing.address }}
+      </li>
+      <li>
+        Distance: {{ listing.distance }}
+      </li>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { listingService } from '../services/ListingService'
-import { AppState } from '../AppState'
+// import { AppState } from '../AppState'
 /* eslint-disable vue/require-default-prop */
 
 export default {
@@ -18,9 +24,14 @@ export default {
   },
   setup(props) {
     onMounted(async() => {
-      await listingService.getDistance(AppState.userLocation, props.listingProp)
+      state.userLocation = JSON.parse(window.localStorage.getItem('userLocation'))
+      await listingService.getDistance(state.userLocation, props.listingProp)
+    })
+    const state = reactive({
+      userLocation: {}
     })
     return {
+      state,
       listing: computed(() => props.listingProp)
     }
   }
@@ -28,5 +39,7 @@ export default {
 </script>
 
 <style scoped>
-
+  li {
+    list-style: none;
+  }
 </style>

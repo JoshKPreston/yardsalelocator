@@ -13,6 +13,7 @@ class ListingService {
 
   async getDistance(origin, destination) {
     try {
+      // eslint-disable-next-line no-console
       console.log(origin)
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
       const index = AppState.listings.findIndex(l => l === destination)

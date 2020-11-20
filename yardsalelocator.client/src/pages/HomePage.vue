@@ -1,12 +1,14 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center  container-fluid justify-content-center">
+  <div class="home flex-grow-1 d-flex flex-column align-items-center container-fluid justify-content-center">
     <div class="display-3 row title-height">
       MilkShake
     </div>
     <div class="row justify-content-center top-margin w-100">
       <div class="col">
-        <button class="btn btn-primary" form="advanced-search">
-          <h4>Find Near Me</h4>
+        <button class="btn btn-primary mb-1" form="advanced-search">
+          <h4 class="m-auto">
+            Find Near Me
+          </h4>
         </button>
         <div id="geo-location"></div>
         <div class="d-flex align-items-center my-2 justify-content-center"
@@ -99,6 +101,7 @@ export default {
       showPosition(position) {
         AppState.userLocation.latitude = position.coords.latitude
         AppState.userLocation.longitude = position.coords.longitude
+        window.localStorage.setItem('userLocation', JSON.stringify(AppState.userLocation))
         logger.log(AppState.userLocation)
       }
     }

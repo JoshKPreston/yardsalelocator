@@ -18,10 +18,8 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" v-if="route.name === 'Results'">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            <p class="text-dark">
-              Back
-            </p>
+          <router-link :to="{ name: 'Home' }" class="nav-link text-dark p-0 pr-3">
+            Back
           </router-link>
         </li>
       </ul>
@@ -52,16 +50,26 @@
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
+            <router-link :to="{ name: 'Home' }">
+              <div class="list-group-item list-group-item-action hoverable">
+                Home
+              </div>
+            </router-link>
             <router-link :to="{ name: 'Profile' }">
               <div class="list-group-item list-group-item-action hoverable">
                 Profile
+              </div>
+            </router-link>
+            <router-link :to="{ name: 'Results' }">
+              <div class="list-group-item list-group-item-action hoverable">
+                Results
               </div>
             </router-link>
             <div
               class="list-group-item list-group-item-action hoverable"
               @click="logout"
             >
-              logout
+              Logout
             </div>
           </div>
         </div>
