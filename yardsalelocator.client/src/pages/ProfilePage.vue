@@ -57,9 +57,11 @@
       id="newListing"
       class="post-new-listing row justify-content-start align-items-center w-100 collapse"
     >
-      <form @submit.prevent="postNewListing()" class="form-row">
+      <form @submit.prevent="create(state.newListing)" class="form-row">
+        <!-- address -->
         <div class="form-group col-12">
           <input
+            :v-model="state.newListing.address"
             type="text"
             name="newListingAddress"
             id="newListingAddress"
@@ -68,17 +70,18 @@
             aria-describedby="helpId"
           />
         </div>
+        <!-- start date -->
         <div class="form-group col-12">
           <input
-            type="text"
+            :v-model="state.newListing.startDate"
+            type="date"
             name="newListingStartDate"
             id="newListingStartDate"
             class="form-control"
-            placeholder="Start date"
             aria-describedby="helpId"
           />
         </div>
-
+        <!-- num of days open -->
         <div class="form-group col-12 pl-2">
           <div class="form-check form-check-inline">
             <label class="form-check-label">Days Open</label>
@@ -88,31 +91,88 @@
               class="form-check-input"
               type="radio"
               name="inlineRadioOptions"
-              id="inlineRadio1"
+              id="newListingDaysOpenOne"
               value="option1"
             />
-            <label class="form-check-label" for="inlineRadio1">1</label>
+            <label class="form-check-label" for="newListingDaysOpenOne">1</label>
           </div>
           <div class="form-check form-check-inline">
             <input
               class="form-check-input"
               type="radio"
               name="inlineRadioOptions"
-              id="inlineRadio2"
+              id="newListingDaysOpenTwo"
               value="option2"
             />
-            <label class="form-check-label" for="inlineRadio2">2</label>
+            <label class="form-check-label" for="newListingDaysOpenTwo">2</label>
           </div>
           <div class="form-check form-check-inline">
             <input
               class="form-check-input"
               type="radio"
               name="inlineRadioOptions"
-              id="inlineRadio3"
+              id="newListingDaysOpenThree"
               value="option3"
             />
-            <label class="form-check-label" for="inlineRadio3">3</label>
+            <label class="form-check-label" for="newListingDaysOpenThree">3</label>
           </div>
+        </div>
+        <!-- img upload -->
+        <div class="form-group col-12">
+          <!-- <input
+            type="file"
+            name="newListingImgFileUpload"
+            id="newListingImgFileUpload"
+            class=""
+            aria-describedby="helpId"
+            accept="image/*"
+          /> -->
+          <!-- <div class="custom-file">
+            <input type="file" class="custom-file-input" id="newListingImgFileUpload" name="newListingImgFileUpload" accept="image/*">
+            <label class="custom-file-label" for="newListingImgFileUpload">Choose file...</label>
+            <div class="invalid-feedback">
+              Image file type only
+            </div>
+          </div> -->
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
+              <label class="custom-file-label" for="newListingImgFileUpload" aria-describedby="newListingImgFileUploadAddon">Choose file</label>
+            </div>
+            <div class="input-group-append">
+              <span class="input-group-text" id="newListingImgFileUploadAddon">Upload</span>
+            </div>
+          </div>
+          <div class="row justify-content-around">
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+          </div>
+        </div>
+        <!-- description -->
+        <div class="form-group col-12">
+          <textarea
+            :v-model="state.newListing.description"
+            rows="3"
+            type="text"
+            name="newListingDescription"
+            id="newListingDescription"
+            class="form-control"
+            placeholder="Description"
+            aria-describedby="helpId"
+          >
+          </textarea>
+        </div>
+        <div class="form-group col-12">
+          <button type="submit" class="btn btn-primary btn-block">
+            Submit
+          </button>
         </div>
       </form>
     </div>
@@ -146,10 +206,11 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { listingService } from '../services/ListingService'
 import { setAuth } from '../services/AxiosService'
+import { logger } from '../utils/Logger'
 
 export default {
   name: 'Profile',
@@ -158,9 +219,20 @@ export default {
       setAuth()
       await listingService.getAll()
     })
+    const state = reactive({
+      newListing: {}
+    })
     return {
+      state,
       profile: computed(() => AppState.profile),
-      listings: computed(() => AppState.listings.filter(listing => listing.profile.email === AppState.profile.email))
+      listings: computed(() => AppState.listings.filter(listing => listing.profile.email === AppState.profile.email)),
+      async create(newListing) {
+        await listingService.getCoordinates(newListing.address)
+        newListing.lat = AppState.userLocation.latitude
+        newListing.long = AppState.userLocation.longitude
+        logger.log(newListing)
+        listingService.create(newListing)
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ const Listing = new Schema(
     daysOpen: { type: Number, required: true, default: 1 },
     isOpen: { type: Boolean, default: false },
     tags: { type: Array },
+    // NOTE we may want to consider changing this to an img array
     img: { type: String },
     description: { type: String },
     profile: { type: String, ref: 'Profile', required: true }

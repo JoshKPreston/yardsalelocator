@@ -34,13 +34,25 @@ class ListingService {
   //   }
   // }
 
+  // NOTE we may want to consider making this function agnostic to whether it is for coordinates on a current user's location, or coordinates for their new listing
+  // as they may be at a coffee shop or something when deciding to post, *shrug* may not be worth our TEE though
   async getCoordinates(newAddress) {
     try {
       const res = await radarApi.get('search/autocomplete?query=' + newAddress)
       AppState.userLocation.latitude = res.data.addresses[0].latitude
       AppState.userLocation.longitude = res.data.addresses[0].longitude
+      // eslint-disable-next-line no-console
       console.log(AppState.userLocation)
       // AppState.userLocation = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  async create(newListing) {
+    try {
+      const res = await api.post('', newListing)
+      AppState.listings = [...AppState.listings, res.data]
     } catch (error) {
       logger.error(error)
     }

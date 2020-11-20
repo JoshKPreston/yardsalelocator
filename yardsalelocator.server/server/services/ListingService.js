@@ -15,8 +15,8 @@ class ListingService {
     return listing
   }
 
-  async create(listing) {
-    return await dbContext.Listing.create(listing)
+  async create(newListing) {
+    return await dbContext.Listing.create(newListing)
   }
 }
 
