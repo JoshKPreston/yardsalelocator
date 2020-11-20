@@ -25,7 +25,7 @@
         </div>
         <div class="collapse col-12" id="advancedSearchCollapse">
           <div class="card card-body">
-            <form id="advanced-search" class="form-group" @submit.prevent="getLocation()">
+            <form id="advanced-search" class="form-group" @submit.prevent="getResults()">
               <input type="text"
                      class="form-control"
                      aria-describedby="helpId"
@@ -46,9 +46,9 @@
                      class="slider mt-2"
                      aria-label="Distance"
                      aria-describedby="helpId"
-                     v-model="state.advancedSearch.slider"
+                     v-model="state.advancedSearch.distance"
               >
-              <span id="f">{{ state.advancedSearch.slider }} miles</span>
+              <span id="f">{{ state.advancedSearch.distance }} miles</span>
             </form>
           </div>
         </div>
@@ -62,50 +62,35 @@
 </template>
 
 <script>
-import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
-import router from '../router'
 import { reactive, onMounted } from 'vue'
-import { listingService } from '../services/ListingService'
+import { locationService } from '../services/LocationService'
 import { setAuth } from '../services/AxiosService'
+import router from '../router'
+import { AppState } from '../AppState'
 
 export default {
   name: 'Home',
   setup() {
     onMounted(async() => {
       await setAuth()
+      await locationService.getGeoLocation()
     })
     const state = reactive({
       advancedSearch: {
-        slider: 5,
+        distance: 5,
         address: '',
         tags: []
       }
     })
     return {
-
       state,
-      // NOTE need to consider try catch and loading geolocation on page load because a use can bypass clicking the FIND button and go straight to profile
-      //    especially if we are routing directly to their profile page on login or something currently I have local storage working
-      //    so refreshes work fine on Profile page but didn't want to replicate local load on all pages until you guys saw working example
-      async getLocation() {
-        if (!state.advancedSearch.address) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.showPosition)
-            router.push({ name: 'Results' })
-          } else {
-            document.getElementById('geo-location').innerText = 'Geolocation is not supported by this browser.'
-          }
-        } else {
-          await listingService.getCoordinates(state.advancedSearch.address)
-          router.push({ name: 'Results' })
+      async getResults() {
+        if (state.advancedSearch.address) {
+          await locationService.getCoordinates(state.advancedSearch.address)
         }
-      },
-      showPosition(position) {
-        AppState.userLocation.latitude = position.coords.latitude
-        AppState.userLocation.longitude = position.coords.longitude
-        window.localStorage.setItem('userLocation', JSON.stringify(AppState.userLocation))
-        logger.log(AppState.userLocation)
+        AppState.userLocation.distance = state.advancedSearch.distance
+        window.localStorage.setItem('distance', JSON.stringify(state.advancedSearch.distance))
+        router.push({ name: 'Results' })
       }
     }
   }

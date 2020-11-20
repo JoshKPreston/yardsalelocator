@@ -5,8 +5,9 @@ export const AppState = reactive({
   user: {},
   profile: {},
   userLocation: {
-    latitude: Number,
-    longitude: Number
+    latitude: null,
+    longitude: null,
+    distance: null
   },
   listings: []
 })

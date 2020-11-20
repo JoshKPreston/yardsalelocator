@@ -34,6 +34,7 @@
         v-for="listing in listings"
         :key="listing"
         :listing-prop="listing"
+        :location-prop="location"
       />
     </div>
     <div
@@ -208,6 +209,7 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
 import { setAuth } from '../services/AxiosService'
 import { logger } from '../utils/Logger'
@@ -216,7 +218,8 @@ export default {
   name: 'Profile',
   setup() {
     onMounted(async() => {
-      setAuth()
+      await setAuth()
+      await locationService.getGeoLocation()
       await listingService.getAll()
     })
     const state = reactive({
@@ -224,6 +227,7 @@ export default {
     })
     return {
       state,
+      location: computed(() => AppState.userLocation),
       profile: computed(() => AppState.profile),
       listings: computed(() => AppState.listings.filter(listing => listing.profile.email === AppState.profile.email)),
       // TODO need to finish passing the form to create new listing, sorry brain is fried it's 4am
