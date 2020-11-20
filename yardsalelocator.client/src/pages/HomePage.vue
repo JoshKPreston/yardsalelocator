@@ -85,6 +85,9 @@ export default {
     return {
 
       state,
+      // NOTE need to consider try catch and loading geolocation on page load because a use can bypass clicking the FIND button and go straight to profile
+      //    especially if we are routing directly to their profile page on login or something currently I have local storage working
+      //    so refreshes work fine on Profile page but didn't want to replicate local load on all pages until you guys saw working example
       async getLocation() {
         if (!state.advancedSearch.address) {
           if (navigator.geolocation) {

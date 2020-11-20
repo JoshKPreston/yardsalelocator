@@ -226,6 +226,7 @@ export default {
       state,
       profile: computed(() => AppState.profile),
       listings: computed(() => AppState.listings.filter(listing => listing.profile.email === AppState.profile.email)),
+      // TODO need to finish passing the form to create new listing, sorry brain is fried it's 4am
       async create(newListing) {
         await listingService.getCoordinates(newListing.address)
         newListing.lat = AppState.userLocation.latitude
