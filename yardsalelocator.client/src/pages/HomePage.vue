@@ -31,6 +31,7 @@
                      v-model="state.advancedSearch.address"
               >
               <input type="text"
+                     data-role="tagsinput"
                      class="form-control mt-2"
                      aria-describedby="helpId"
                      placeholder="Tags"
