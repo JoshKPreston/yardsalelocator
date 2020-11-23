@@ -1,5 +1,6 @@
 import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
+import { logger } from '../utils/Logger'
 
 class ListingService {
   async getAll(query = {}) {
@@ -17,6 +18,14 @@ class ListingService {
 
   async create(newListing) {
     return await dbContext.Listing.create(newListing)
+  }
+
+  async edit(listingId, body) {
+    try {
+      return await dbContext.Listing.findOneAndUpdate({ _id: listingId }, body)
+    } catch (error) {
+      logger.error(error)
+    }
   }
 }
 

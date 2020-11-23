@@ -32,13 +32,14 @@
                      placeholder="Address, City"
                      v-model="state.advancedSearch.address"
               >
-              <input type="text"
+              <TagInputComponent />
+              <!-- <input type="text"
                      data-role="tagsinput"
                      class="form-control mt-2"
                      aria-describedby="helpId"
                      placeholder="Tags"
                      v-model="state.advancedSearch.tags"
-              >
+              > -->
               <input type="range"
                      min="1"
                      id="slider"
@@ -62,14 +63,16 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 import { locationService } from '../services/LocationService'
 import { setAuth } from '../services/AxiosService'
 import router from '../router'
 import { AppState } from '../AppState'
+import TagInputComponent from '../components/TagInputComponent'
 
 export default {
   name: 'Home',
+  components: { TagInputComponent },
   setup() {
     onMounted(async() => {
       await setAuth()
@@ -79,17 +82,19 @@ export default {
       advancedSearch: {
         distance: 5,
         address: '',
-        tags: []
+        searchTags: AppState.searchTags
       }
     })
     return {
       state,
+      tags: computed(() => AppState.searchTags),
       async getResults() {
         if (state.advancedSearch.address) {
           await locationService.getCoordinates(state.advancedSearch.address)
         }
         AppState.userLocation.distance = state.advancedSearch.distance
         window.localStorage.setItem('distance', JSON.stringify(state.advancedSearch.distance))
+        window.localStorage.setItem('searchTags', JSON.stringify(state.advancedSearch.searchTags))
         router.push({ name: 'Results' })
       }
     }

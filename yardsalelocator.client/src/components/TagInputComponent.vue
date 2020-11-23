@@ -6,7 +6,7 @@
     </div>
     <input type="text"
            placeholder="Enter a Tag"
-           class="tag-input__text"
+           class="tag-input__text w-100"
            @keydown.enter="addTag"
            @keydown.space="addTag"
            @keydown.delete="removeLastTag"
@@ -14,10 +14,12 @@
   </div>
 </template>
 <script>
+import { computed } from 'vue'
+import { AppState } from '../AppState'
 export default {
   setup() {
     return {
-      tags: ['hello', 'world'],
+      tags: computed(() => AppState.searchTags),
       addTag(event) {
         event.preventDefault()
         var val = event.target.value.trim()

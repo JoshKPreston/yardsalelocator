@@ -11,6 +11,7 @@ export class ListingController extends BaseController {
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
+      .put('/:id', this.edit)
   }
 
   async getAll(req, res, next) {
@@ -35,6 +36,14 @@ export class ListingController extends BaseController {
       req.body.creatorEmail = req.userInfo.email
       req.body.profile = req.userInfo.id
       res.send(await listingService.create(req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async edit(req, res, next) {
+    try {
+      return res.send(await listingService.edit(req.params.id, req.body))
     } catch (error) {
       next(error)
     }

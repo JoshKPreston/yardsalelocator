@@ -11,5 +11,6 @@ export const AppState = reactive({
     formattedAddress: null
   },
   listings: [],
-  currentListing: {}
+  currentListing: {},
+  searchTags: []
 })
