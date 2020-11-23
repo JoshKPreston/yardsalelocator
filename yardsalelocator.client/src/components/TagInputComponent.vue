@@ -8,7 +8,7 @@
            placeholder="Enter a Tag"
            class="tag-input__text"
            @keydown.enter="addTag"
-           @keydown.188="addTag"
+           @keydown.space="addTag"
            @keydown.delete="removeLastTag"
     />
   </div>
