@@ -37,6 +37,17 @@
         :listing-prop="listing"
         :location-prop="location"
       />
+      <div v-if="listings[0]" class="w-100">
+        <button :class="listings[0].isOpen ? 'btn btn-danger btn-block' : 'btn btn-success btn-block'" @click.prevent="toggleOpen">
+          {{ listings[0].isOpen ? 'Close Yard Sale' : 'Open Yard Sale' }}
+        </button>
+      </div>
+      <!-- <button class="btn btn-success btn-block" v-if="!listings[0].isOpen">
+        Open Yard Sale
+      </button>
+      <button class="btn btn-danger btn-block" v-else>
+        Close Yard Sale
+      </button> -->
     </div>
     <div
       class="row flex-grow-1 align-items-center border-top w-100"
@@ -83,6 +94,9 @@
             class="form-control"
             aria-describedby="helpId"
           />
+        </div>
+        <div class="form-group col-12 pl-2">
+          <TagInputComponent />
         </div>
         <!-- num of days open -->
         <div class="form-group col-12 pl-2">
@@ -176,7 +190,11 @@
           </textarea>
         </div>
         <div class="form-group col-12">
-          <button type="submit" class="btn btn-primary btn-block">
+          <button type="submit"
+                  class="btn btn-primary btn-block"
+                  data-toggle="collapse"
+                  href="#newListing"
+          >
             Submit
           </button>
         </div>
@@ -232,7 +250,7 @@ export default {
         address: '',
         startDate: Date,
         daysOpen: 1,
-        tags: [],
+        tags: AppState.searchTags,
         isOpen: false,
         description: ''
       }
@@ -250,6 +268,17 @@ export default {
         state.newListing.address = AppState.userLocation.formattedAddress
         logger.log(state.newListing)
         await listingService.create(state.newListing)
+        // router.push({name: 'Listing', params: {id: }})
+        listingService.getAll()
+      },
+      async toggleOpen() {
+        if (this.listings[0].isOpen) {
+          await listingService.editListing(this.listings[0].id, { isOpen: false })
+          this.listings[0].isOpen = false
+        } else {
+          await listingService.editListing(this.listings[0].id, { isOpen: true })
+          this.listings[0].isOpen = true
+        }
       }
     }
   }

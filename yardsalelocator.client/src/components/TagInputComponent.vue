@@ -5,8 +5,8 @@
       {{ tag }}
     </div>
     <input type="text"
-           placeholder="Enter a Tag"
-           class="tag-input__text w-100"
+           placeholder="  Enter a Tag"
+           class="tag-input__text w-100 bg-white my-2 rounded"
            @keydown.enter="addTag"
            @keydown.space="addTag"
            @keydown.delete="removeLastTag"
@@ -69,10 +69,11 @@ export default {
 }
 
 .tag-input__text {
-  border: none;
+  border: 1px solid #ccd0d3;
   outline: none;
-  font-size: 0.9em;
-  line-height: 50px;
+  font-size: 1em;
+  line-height: 35px;
   background: none;
+
 }
 </style>

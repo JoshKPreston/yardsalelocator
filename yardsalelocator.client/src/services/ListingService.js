@@ -42,5 +42,13 @@ class ListingService {
       logger.error(error)
     }
   }
+
+  async editListing(id, editedListing) {
+    try {
+      await api.put('api/listing/' + id, editedListing)
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 export const listingService = new ListingService()
