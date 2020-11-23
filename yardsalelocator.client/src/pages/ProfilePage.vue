@@ -16,7 +16,7 @@
       role="button"
       aria-expanded="false"
       aria-controls="currentListings"
-      v-if="listings.length !== 0"
+      v-if="listings.length > 0"
     >
       <div class="col-1 d-flex justify-content-start">
         <span class="d-block"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
@@ -31,7 +31,7 @@
       id="currentListings"
       class="current-listings row justify-content-start align-items-center w-100 collapse"
     >
-      <ListingComponent
+      <CurrentListingComponent
         v-for="listing in listings"
         :key="listing"
         :listing-prop="listing"
