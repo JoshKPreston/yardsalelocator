@@ -27,6 +27,14 @@ class ListingService {
       logger.error(error)
     }
   }
+
+  async delete(listingId) {
+    try {
+      return await dbContext.Listing.findOneAndDelete({ _id: listingId })
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 
 export const listingService = new ListingService()

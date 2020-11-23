@@ -12,6 +12,7 @@ export class ListingController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.edit)
+      .delete('/:id', this.delete)
   }
 
   async getAll(req, res, next) {
@@ -44,6 +45,14 @@ export class ListingController extends BaseController {
   async edit(req, res, next) {
     try {
       return res.send(await listingService.edit(req.params.id, req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async delete(req, res, next) {
+    try {
+      return res.send(await listingService.delete(req.params.id))
     } catch (error) {
       next(error)
     }

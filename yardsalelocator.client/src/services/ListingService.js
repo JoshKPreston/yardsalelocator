@@ -50,5 +50,14 @@ class ListingService {
       logger.error(error)
     }
   }
+
+  async deleteListing(id) {
+    try {
+      await api.delete('api/listing/' + id)
+      this.getAll()
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 export const listingService = new ListingService()

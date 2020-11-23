@@ -1,5 +1,5 @@
 <template>
-  <div class="listing-component row justify-content-start border-top p-3" v-if="listing.distance && (feetCheck() < distance) && (state.match.length > 0 || !searchTags.length)">
+  <div class="listing-component col-12 d-flex justify-content-start border-top p-3" v-if="listing.distance && (feetCheck() < distance) && (state.match.length > 0 || !searchTags.length)">
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
     <div class="col-12" @click="getListing()">
       <li>

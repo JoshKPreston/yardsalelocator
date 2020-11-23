@@ -1,17 +1,22 @@
 <template>
   <div
-    class="profile-page flex-grow-1 d-flex flex-column align-items-center container-fluid justify-content-center"
+    class="profile-page flex-grow-1 d-flex flex-column align-items-center container-fluid "
   >
-    <div class="row flex-grow-1 align-items-center border-top w-100">
-      <div class="col-12 d-flex justify-content-start">
-        <h5 class="m-0">
-          Welcome {{ profile.name }}
-        </h5>
+    <div class="row height-custom align-items-center border-top w-100">
+      <div class="col-12 d-flex justify-content-center">
+        <div>
+          <h1 class="m-0">
+            Welcome
+          </h1>
+          <p class="text-center">
+            {{ profile.name }}
+          </p>
+        </div>
       </div>
     </div>
     <div
-      class="row flex-grow-1 align-items-center border-top w-100"
-      data-toggle="collapse"
+      class="row height-custom align-items-center border-top w-100"
+      data-toggle=""
       href="#currentListings"
       role="button"
       aria-expanded="false"
@@ -19,7 +24,7 @@
       v-if="listings.length > 0"
     >
       <div class="col-1 d-flex justify-content-start">
-        <span class="d-block"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+        <span class="d-block"></span>
       </div>
       <div class="col-10 d-flex justify-content-start">
         <h5 class="m-0">
@@ -27,20 +32,36 @@
         </h5>
       </div>
     </div>
+
     <div
       id="currentListings"
-      class="current-listings row justify-content-start align-items-center w-100 collapse"
+      class="current-listings row justify-content-start align-items-center w-100"
     >
-      <CurrentListingComponent
+      <b><CurrentListingComponent
         v-for="listing in listings"
         :key="listing"
         :listing-prop="listing"
         :location-prop="location"
       />
-      <div v-if="listings[0]" class="w-100">
-        <button :class="listings[0].isOpen ? 'btn btn-danger btn-block' : 'btn btn-success btn-block'" @click.prevent="toggleOpen">
+      </b>
+      <div v-if="listings[0]" class="w-100 d-flex justify-content-between align-items-center pl-3">
+        <button :class="listings[0].isOpen ? 'btn btn-warning btn-block' : 'btn btn-success'" @click.prevent="toggleOpen">
           {{ listings[0].isOpen ? 'Close Yard Sale' : 'Open Yard Sale' }}
         </button>
+        <div class="m-3 d-flex">
+          <div
+            class=""
+            data-toggle="collapse"
+            href="#editListing"
+            role="button"
+            aria-expanded="false"
+            aria-controls="editListing"
+          >
+            <i class="fas fa-edit fa-2x mr-2"></i>
+          </div>
+          <i class="fas fa-trash fa-2x text-danger" @click.prevent="deleteListing">
+          </i>
+        </div>
       </div>
       <!-- <button class="btn btn-success btn-block" v-if="!listings[0].isOpen">
         Open Yard Sale
@@ -49,8 +70,112 @@
         Close Yard Sale
       </button> -->
     </div>
+    <div id="editListing" class="collapse">
+      <form @submit.prevent="createListing()" class="form-row">
+        <!-- num of days open -->
+        <div class="form-group col-12 pl-2">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">Days Open</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="newListingDaysOpenOne"
+              :value="1"
+              v-model="state.newListing.daysOpen"
+            />
+            <label class="form-check-label" for="newListingDaysOpenOne">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="newListingDaysOpenTwo"
+              :value="2"
+              v-model="state.newListing.daysOpen"
+            />
+            <label class="form-check-label" for="newListingDaysOpenTwo">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="newListingDaysOpenThree"
+              :value="3"
+              v-model="state.newListing.daysOpen"
+            />
+            <label class="form-check-label" for="newListingDaysOpenThree">3</label>
+          </div>
+        </div>
+        <!-- img upload -->
+        <div class="form-group col-12">
+          <!-- <input
+            type="file"
+            name="newListingImgFileUpload"
+            id="newListingImgFileUpload"
+            class=""
+            aria-describedby="helpId"
+            accept="image/*"
+          /> -->
+          <!-- <div class="custom-file">
+            <input type="file" class="custom-file-input" id="newListingImgFileUpload" name="newListingImgFileUpload" accept="image/*">
+            <label class="custom-file-label" for="newListingImgFileUpload">Choose file...</label>
+            <div class="invalid-feedback">
+              Image file type only
+            </div>
+          </div> -->
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
+              <label class="custom-file-label" for="newListingImgFileUpload" aria-describedby="newListingImgFileUploadAddon">Choose file</label>
+            </div>
+            <div class="input-group-append">
+              <span class="input-group-text" id="newListingImgFileUploadAddon">Upload</span>
+            </div>
+          </div>
+          <div class="row justify-content-around">
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+            <div class="col-3">
+              <img src="" alt="img">
+            </div>
+          </div>
+        </div>
+        <!-- description -->
+        <div class="form-group col-12">
+          <textarea
+            v-model="state.newListing.description"
+            rows="3"
+            type="text"
+            name="newListingDescription"
+            id="newListingDescription"
+            class="form-control"
+            placeholder="Description"
+            aria-describedby="helpId"
+          >
+          </textarea>
+        </div>
+        <div class="form-group col-12">
+          <button type="submit"
+                  class="btn btn-primary btn-block"
+                  data-toggle="collapse"
+                  href="#newListing"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
     <div
-      class="row flex-grow-1 align-items-center border-top w-100"
+      class="row align-items-center border-top w-100 height-custom border-bottom"
       data-toggle="collapse"
       href="#newListing"
       role="button"
@@ -200,7 +325,7 @@
         </div>
       </form>
     </div>
-    <div
+    <!-- <div
       class="row flex-grow-1 align-items-center border-top w-100"
       data-toggle="collapse"
       href="#history"
@@ -216,7 +341,7 @@
           History
         </h5>
       </div>
-    </div>
+    </div> -->
     <div
       id="history"
       class="history row justify-content-start align-items-center w-100 collapse"
@@ -279,6 +404,9 @@ export default {
           await listingService.editListing(this.listings[0].id, { isOpen: true })
           this.listings[0].isOpen = true
         }
+      },
+      async deleteListing() {
+        await listingService.deleteListing(this.listings[0].id)
       }
     }
   }
@@ -295,5 +423,8 @@ div[aria-expanded="true"] .fa-caret-right {
 }
 div[aria-expanded="false"] .fa-caret-right {
   transition: 0.2s transform ease-in-out;
+}
+.height-custom{
+  height: 10vh;
 }
 </style>
