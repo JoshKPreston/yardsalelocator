@@ -3,7 +3,7 @@
     <div class="row custom-height">
       <col-12 class="text-center w-100 align-self-center">
         <h2 class="">
-          {{ listings.length }} yard sales in your area!
+          {{ listingsInRange.length }} yard sales in your area!
         </h2>
       </col-12>
     </div>
@@ -38,6 +38,7 @@ export default {
     return {
       location: computed(() => AppState.userLocation),
       listings: computed(() => AppState.listings.sort((a, b) => (a.distance > b.distance) ? 1 : -1)),
+      listingsInRange: computed(() => AppState.listings.filter(l => l.distance >= AppState.userLocation.distance)),
       searchTags: computed(() => AppState.searchTags)
     }
   },
