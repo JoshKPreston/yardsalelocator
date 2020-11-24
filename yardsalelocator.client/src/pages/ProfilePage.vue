@@ -281,11 +281,11 @@
           </div> -->
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
-              <label class="custom-file-label" for="newListingImgFileUpload" aria-describedby="newListingImgFileUploadAddon">Choose file</label>
+              <input @change="onFileSelected" type="file" class="custom-file-input" id="newListingImgFile" accept="image/*">
+              <label class="custom-file-label" for="newListingImgFile" aria-describedby="newListingImgFileAddon">Choose file</label>
             </div>
             <div class="input-group-append">
-              <span class="input-group-text" id="newListingImgFileUploadAddon">Upload</span>
+              <span @click="onUpload" class="input-group-text" id="newListingImgFileAddon">Upload</span>
             </div>
           </div>
           <div class="row justify-content-around">
@@ -355,11 +355,12 @@
 </template>
 
 <script>
+import { FirebaseStorage } from '../firebase'
 import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
+import { setAuth } from '../services/AxiosService'
 import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
-import { setAuth } from '../services/AxiosService'
+import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 
 export default {
@@ -371,13 +372,16 @@ export default {
       await listingService.getAll()
     })
     const state = reactive({
+      storageRef: FirebaseStorage.ref(),
+      imgFile: [],
       newListing: {
         address: '',
         startDate: Date,
         daysOpen: 1,
         tags: AppState.searchTags,
         isOpen: false,
-        description: ''
+        description: '',
+        imgUrl: ''
       }
     })
     return {
@@ -407,6 +411,30 @@ export default {
       },
       async deleteListing() {
         await listingService.deleteListing(this.listings[0].id)
+      },
+      onFileSelected(e) {
+        logger.log(e)
+        state.imgFile = e.target.files
+      },
+      async onUpload() {
+        // const imageRefFileName = state.storageRef.child(state.newListing.imgFile)
+        const imageRefFilePath = await state.storageRef.child('images/' + new Date() + '_' + state.imgFile[0].name)
+        // const file = document.getElementById('newListingImgFile').files[0]
+        // const metadata = {
+        //   contentType: 'image/*'
+        // }
+
+        // const uploadTask =
+        await imageRefFilePath.put(state.imgFile).then(snapshot => {
+          logger.log(snapshot)
+          logger.log('Uploaded file!')
+        })
+
+        state.newListing.imgUrl = await imageRefFilePath.getDownloadURL()
+        logger.log('imgUrl: ' + state.newListing.imgUrl)
+        // uploadTask.on(FirebaseStorage.TaskEvent.STATE_CHANGED)
+
+        // gs://yard-sale-locator-82b72.appspot.com
       }
     }
   }
