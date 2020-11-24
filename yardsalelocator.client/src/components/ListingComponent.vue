@@ -1,19 +1,24 @@
 <template>
   <div class="listing-component col-12 d-flex justify-content-start border-top p-3" v-if="listing.distance && (feetCheck() < distance) && (state.match.length > 0 || !searchTags.length)">
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
-    <div class="col-12" @click="getListing()">
-      <li>
-        {{ listing.address }}
-      </li>
-      <li>
-        Distance: {{ listing.distance }}
-      </li>
-      <li v-if="listing.tags.length > 0">
+    <div class="row" @click="getListing()">
+      <div class="col-2">
+        <img :src="listing.img" alt="img">
+      </div>
+      <div class="col-10">
+        <li>
+          {{ listing.address }}
+        </li>
+        <li>
+          Distance: {{ listing.distance }}
+        </li>
+        <li v-if="state.match.length > 0">
+          Matching Tags: {{ state.match }}
+        </li>
+      </div>
+      <!-- <li class="col-2" v-if="listing.tags.length > 0">
         Listing Tags: {{ tags }}
-      </li>
-      <li v-if="state.match.length > 0">
-        Matching Tag: {{ state.match }}
-      </li>
+      </li> -->
       <!-- </div> -->
     </div>
   </div>
@@ -71,5 +76,8 @@ export default {
 <style scoped>
   li {
     list-style: none;
+  }
+  img {
+    max-height: 50px;
   }
 </style>

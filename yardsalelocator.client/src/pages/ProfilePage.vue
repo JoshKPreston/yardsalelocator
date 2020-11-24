@@ -1,6 +1,6 @@
 <template>
   <div
-    class="profile-page flex-grow-1 d-flex flex-column align-items-center container-fluid "
+    class="profile-page flex-grow-1 d-flex flex-column align-items-center container-fluid"
   >
     <div class="row height-custom align-items-center border-top w-100">
       <div class="col-12 d-flex justify-content-center">
@@ -128,24 +128,19 @@
               Image file type only
             </div>
           </div> -->
+          // NOTE this is the outer form
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
-              <label class="custom-file-label" for="newListingImgFileUpload" aria-describedby="newListingImgFileUploadAddon">Choose file</label>
+              <input @change="onFileSelected" type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
+              <label class="custom-file-label" for="newListingImgFileUpload" aria-describedby="newListingImgFileUploadAddon">{{ state.imgFile[0].name }}</label>
             </div>
             <div class="input-group-append">
-              <span class="input-group-text" id="newListingImgFileUploadAddon">Upload</span>
+              <span @click="onUpload" class="input-group-text" id="newListingImgFileUploadAddon">Upload</span>
             </div>
           </div>
           <div class="row justify-content-around">
             <div class="col-3">
-              <img src="" alt="img">
-            </div>
-            <div class="col-3">
-              <img src="" alt="img">
-            </div>
-            <div class="col-3">
-              <img src="" alt="img">
+              <img class="img-fluid" :src="state.newListing.img" alt="img">
             </div>
           </div>
         </div>
@@ -282,7 +277,7 @@
           <div class="input-group mb-3">
             <div class="custom-file">
               <input @change="onFileSelected" type="file" class="custom-file-input" id="newListingImgFile" accept="image/*">
-              <label class="custom-file-label" for="newListingImgFile" aria-describedby="newListingImgFileAddon">Choose file</label>
+              <label class="custom-file-label" for="newListingImgFile" aria-describedby="newListingImgFileAddon">{{ state.imgFile[0].name }}</label>
             </div>
             <div class="input-group-append">
               <span @click="onUpload" class="input-group-text" id="newListingImgFileAddon">Upload</span>
@@ -290,13 +285,7 @@
           </div>
           <div class="row justify-content-around">
             <div class="col-3">
-              <img src="" alt="img">
-            </div>
-            <div class="col-3">
-              <img src="" alt="img">
-            </div>
-            <div class="col-3">
-              <img src="" alt="img">
+              <img class="img-fluid" :src="state.newListing.imgUrl" alt="img">
             </div>
           </div>
         </div>
@@ -373,7 +362,7 @@ export default {
     })
     const state = reactive({
       storageRef: FirebaseStorage.ref(),
-      imgFile: [],
+      imgFile: [{ name: 'Choose file' }],
       newListing: {
         address: '',
         startDate: Date,
@@ -381,7 +370,7 @@ export default {
         tags: AppState.searchTags,
         isOpen: false,
         description: '',
-        imgUrl: ''
+        img: ''
       }
     })
     return {
@@ -430,8 +419,8 @@ export default {
           logger.log('Uploaded file!')
         })
 
-        state.newListing.imgUrl = await imageRefFilePath.getDownloadURL()
-        logger.log('imgUrl: ' + state.newListing.imgUrl)
+        state.newListing.img = await imageRefFilePath.getDownloadURL()
+        logger.log('img: ' + state.newListing.img)
         // uploadTask.on(FirebaseStorage.TaskEvent.STATE_CHANGED)
 
         // gs://yard-sale-locator-82b72.appspot.com

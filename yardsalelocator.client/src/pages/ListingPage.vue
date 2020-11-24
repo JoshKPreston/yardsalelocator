@@ -1,6 +1,10 @@
 <template>
-  <div class="listing">
-    <h1>{{ listing.description }}</h1>
+  <div class="listing flex-grow-1 d-flex flex-column align-items-center container-fluid">
+    <h3>{{ listing.address }}</h3>
+    <h3>{{ listing.distance }}</h3>
+    <img class="img-fluid custom-img-size" :src="listing.img" alt="img">
+    <h3>{{ listing.description }}</h3>
+    <small>{{ listing.tags }}</small>
   </div>
 </template>
 
@@ -25,5 +29,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  // img {
+  //   max-width: 100px;
+  // }
+  .custom-img-size {
+    background-size: contain;
+  }
 </style>
