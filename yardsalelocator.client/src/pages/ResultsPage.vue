@@ -1,11 +1,13 @@
 <template>
   <div class="results flex-grow-1 d-flex flex-column align-items-left container-fluid justify-content-center">
-    <ListingComponent v-for="listing in listings"
-                      :key="listing"
-                      :listing-prop="listing"
-                      :location-prop="location"
-                      :tag-prop="searchTags"
-    />
+    <div class="row">
+      <ListingComponent v-for="listing in listings"
+                        :key="listing"
+                        :listing-prop="listing"
+                        :location-prop="location"
+                        :tag-prop="searchTags"
+      />
+    </div>
   </div>
 </template>
 

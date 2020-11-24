@@ -3,18 +3,20 @@
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
     <div class="row" @click="getListing()">
       <div class="col-2">
-        <img :src="listing.img" alt="img">
+        <img :src="listing.img" alt="img" v-if="listing.img">
       </div>
       <div class="col-10">
-        <li>
-          {{ listing.address }}
-        </li>
-        <li>
-          Distance: {{ listing.distance }}
-        </li>
-        <li v-if="state.match.length > 0">
-          Matching Tags: {{ state.match }}
-        </li>
+        <ul class="text-dark">
+          <li>
+            {{ listing.address }}
+          </li>
+          <li>
+            Distance: {{ listing.distance }}
+          </li>
+          <li v-if="state.match.length > 0">
+            Matching Tags: {{ state.match }}
+          </li>
+        </ul>
       </div>
       <!-- <li class="col-2" v-if="listing.tags.length > 0">
         Listing Tags: {{ tags }}
