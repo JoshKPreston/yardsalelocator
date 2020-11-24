@@ -210,6 +210,7 @@
             v-model="state.newListing.startDate"
             type="date"
             name="newListingStartDate"
+            :min="new Date().toISOString().split('T')[0]"
             id="newListingStartDate"
             class="form-control"
             aria-describedby="helpId"
