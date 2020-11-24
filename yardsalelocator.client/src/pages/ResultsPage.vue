@@ -3,7 +3,7 @@
     <div class="row custom-height">
       <col-12 class="text-center w-100 align-self-center">
         <h2 class="">
-          {{ listings.length }} yard sales in your area!
+          <!-- {{ state.listingDistance.length }} yard sales in your area! -->
         </h2>
       </col-12>
     </div>
@@ -30,6 +30,9 @@ export default {
   name: 'Results',
   setup() {
     const state = reactive({
+      // feetCheck: null,
+      // userDistance: parseInt(AppState.userLocation.distance),
+      // listingDistance: AppState.listings.filter(l => listingService.feetCheck(l) <= AppState.userLocation.distance)
     })
     onMounted(async() => {
       await setAuth()
@@ -41,8 +44,8 @@ export default {
       state,
       location: computed(() => AppState.userLocation),
       listings: computed(() => AppState.listings.sort((a, b) => (a.distance > b.distance) ? 1 : -1)),
-      // listingsInRange: computed(() => AppState.listings.filter(l => parseInt(l.distance.split(' ')[0]) <= AppState.userLocation.distance)),
       searchTags: computed(() => AppState.searchTags)
+
     }
   },
   components: { ListingComponent }

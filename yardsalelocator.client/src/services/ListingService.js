@@ -59,5 +59,14 @@ class ListingService {
       logger.error(error)
     }
   }
+
+  // feetCheck(l) {
+  //   console.log(l)
+  //   if (l.distance.split(' ')[1] === 'ft') {
+  //     return 1
+  //   } else {
+  //     return parseInt(l.distance.split(' ')[0])
+  //   }
+  // }
 }
 export const listingService = new ListingService()
