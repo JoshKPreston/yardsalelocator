@@ -418,14 +418,14 @@ export default {
       },
       async onUpload() {
         // const imageRefFileName = state.storageRef.child(state.newListing.imgFile)
-        const imageRefFilePath = await state.storageRef.child('images/' + new Date() + '_' + state.imgFile[0].name)
+        const imageRefFilePath = await state.storageRef.child('images/' + state.imgFile[0].name)
         // const file = document.getElementById('newListingImgFile').files[0]
         // const metadata = {
         //   contentType: 'image/*'
         // }
 
         // const uploadTask =
-        await imageRefFilePath.put(state.imgFile).then(snapshot => {
+        await imageRefFilePath.put(state.imgFile[0]).then(snapshot => {
           logger.log(snapshot)
           logger.log('Uploaded file!')
         })
