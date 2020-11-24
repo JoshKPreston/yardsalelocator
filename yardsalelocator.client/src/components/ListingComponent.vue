@@ -1,5 +1,5 @@
 <template>
-  <div class="listing-component col-12 d-flex justify-content-start border-top p-3" v-if="listing.distance && (feetCheck() < distance) && (state.match.length > 0 || !searchTags.length) && listing.isOpen">
+  <div class="listing-component col-12 d-flex justify-content-start border-top p-3" v-if="listing.distance && (feetCheck() < distance) && (state.match.length > 0 || !searchTags.length)">
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
     <div class="row" @click="getListing()">
       <div class="col-2">
@@ -15,6 +15,12 @@
           </li>
           <li v-if="state.match.length > 0">
             Matching Tags: {{ state.match }}
+          </li>
+          <li v-if="listing.isOpen" class="text-success">
+            open
+          </li>
+          <li v-if="!listing.isOpen" class="text-danger">
+            closed
           </li>
         </ul>
       </div>

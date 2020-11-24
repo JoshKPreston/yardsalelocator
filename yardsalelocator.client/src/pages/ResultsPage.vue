@@ -1,6 +1,13 @@
 <template>
-  <div class="results flex-grow-1 d-flex flex-column align-items-left container-fluid justify-content-center">
-    <div class="row">
+  <div class="results container-fluid justify-content-center ">
+    <div class="row custom-height">
+      <col-12 class="text-center w-100 align-self-center">
+        <h2 class="">
+          {{ listings.length }} yard sales in your area!
+        </h2>
+      </col-12>
+    </div>
+    <div class="row align-items-center">
       <ListingComponent v-for="listing in listings"
                         :key="listing"
                         :listing-prop="listing"
@@ -39,5 +46,7 @@ export default {
 </script>
 
 <style scoped>
-
+.custom-height{
+  height: 20vh;
+}
 </style>
