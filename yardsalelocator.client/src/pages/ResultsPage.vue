@@ -3,7 +3,7 @@
     <div class="row custom-height">
       <col-12 class="text-center w-100 align-self-center">
         <h2 class="">
-          {{ listingsInRange.length }} yard sales in your area!
+          {{ listings.length }} yard sales in your area!
         </h2>
       </col-12>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
@@ -29,6 +29,8 @@ import { setAuth } from '../services/AxiosService'
 export default {
   name: 'Results',
   setup() {
+    const state = reactive({
+    })
     onMounted(async() => {
       await setAuth()
       await locationService.getGeoLocation()
@@ -36,9 +38,10 @@ export default {
       AppState.searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
     })
     return {
+      state,
       location: computed(() => AppState.userLocation),
       listings: computed(() => AppState.listings.sort((a, b) => (a.distance > b.distance) ? 1 : -1)),
-      listingsInRange: computed(() => AppState.listings.filter(l => l.distance >= AppState.userLocation.distance)),
+      // listingsInRange: computed(() => AppState.listings.filter(l => parseInt(l.distance.split(' ')[0]) <= AppState.userLocation.distance)),
       searchTags: computed(() => AppState.searchTags)
     }
   },
