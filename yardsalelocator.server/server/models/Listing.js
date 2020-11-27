@@ -7,6 +7,7 @@ const Listing = new Schema(
     lat: { type: String, required: true },
     long: { type: String, required: true },
     startDate: { type: Date, required: true },
+    expireAt: { type: Date },
     daysOpen: { type: Number, required: true, default: 1 },
     isOpen: { type: Boolean, default: false },
     tags: { type: Array },
