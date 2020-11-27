@@ -388,10 +388,10 @@ export default {
         state.newListing.address = AppState.userLocation.formattedAddress
         state.newListing.startDate = new Date(state.newListing.startDate)
         state.newListing.startDate.setDate(state.newListing.startDate.getDate())
-        //         state.newListing.startDate.setHours(0, 0, 0, 0)
+        // state.newListing.startDate.setHours(0, 0, 0, 0)
         state.newListing.expireAt = new Date(state.newListing.startDate)
         state.newListing.expireAt.setHours(0, 0, 0, 0)
-        state.newListing.expireAt.setDate(state.newListing.expireAt.getDate() + state.newListing.daysOpen)
+        state.newListing.expireAt.setDate(state.newListing.expireAt.getDate() + state.newListing.daysOpen + 1)
         logger.log(state.newListing)
         await listingService.create(state.newListing)
         // router.push({name: 'Listing', params: {id: }})
