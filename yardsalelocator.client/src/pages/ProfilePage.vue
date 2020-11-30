@@ -45,7 +45,7 @@
       />
       </b>
       <div v-if="listings[0]" class="w-100 d-flex justify-content-between align-items-center pl-3">
-        <button :class="listings[0].isOpen ? 'btn btn-warning btn-block' : 'btn btn-success'" @click.prevent="toggleOpen">
+        <button :class="listings[0].isOpen ? 'btn btn-warning btn-block' : 'btn btn-success btn-block'" @click.prevent="toggleOpen">
           {{ listings[0].isOpen ? 'Close Yard Sale' : 'Open Yard Sale' }}
         </button>
         <div class="m-3 d-flex">
