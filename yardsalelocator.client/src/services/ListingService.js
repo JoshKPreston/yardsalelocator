@@ -5,7 +5,7 @@ class ListingService {
   async getAll() {
     try {
       const res = await api.get('api/listing')
-      AppState.listings = res.data
+      AppState.listings = res.data.map(d => { d.distance = '0'; return d })
     } catch (error) {
       logger.error(error)
     }
@@ -25,10 +25,11 @@ class ListingService {
       // eslint-disable-next-line no-console
       // console.log(origin)
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
-      const index = AppState.listings.findIndex(l => l === destination)
-      if (index >= 0) {
-        AppState.listings[index].distance = res.data.routes.car.distance.text
-      }
+      destination.distance = res.data.routes.car.distance.text
+      // const index = AppState.listings.findIndex(listing => listing === destination)
+      // if (index >= 0) {
+      //   AppState.listings[index].distance = res.data.routes.car.distance.text
+      // }
     } catch (error) {
       logger.error(error)
     }
@@ -60,13 +61,13 @@ class ListingService {
     }
   }
 
-  // feetCheck(l) {
-  //   console.log(l)
-  //   if (l.distance.split(' ')[1] === 'ft') {
-  //     return 1
-  //   } else {
-  //     return parseInt(l.distance.split(' ')[0])
-  //   }
-  // }
+  feetCheck(listing) {
+    console.log(listing)
+    if (listing.distance && listing.distance.split(' ')[1] === 'ft') {
+      return 1
+    } else {
+      return parseInt(listing.distance.split(' ')[0])
+    }
+  }
 }
 export const listingService = new ListingService()

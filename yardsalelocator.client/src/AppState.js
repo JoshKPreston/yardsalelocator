@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
@@ -13,4 +13,8 @@ export const AppState = reactive({
   listings: [],
   currentListing: {},
   searchTags: []
+})
+
+export const getters = reactive({
+  listings: computed(() => AppState.listings.sort((a, b) => (a.distance < b.distance) ? 1 : -1))
 })
