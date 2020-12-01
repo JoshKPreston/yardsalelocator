@@ -2,14 +2,7 @@
 
 // Your personal API key.
 // Get it here: https://console.cloud.google.com/google/maps-apis
-// const API_KEY = 'AIzaSyBQJfGPc1OC7pA1ynFg9mHGmq0-H0mz3Qs' josh old
-
-const API_KEY = 'AIzaSyA3d9hA6pbLww_QEaABa94ZqMpGs_Anmrc'
-
-// const API_KEY = 'AIzaSyC5NSDtmNuQjpMs-ZvY6UFfO2HfrgWuUH8'
-
-// const API_KEY = 'AIzaSyADaW8IlimQIb8UuXiaozTR8cza1poAeaE'
-const CALLBACK_NAME = 'initMap'
+import { MAP_API_KEY, MAP_CALLBACK_NAME } from '../AuthConfig'
 
 // @ts-ignore
 let initialized = !!window.google
@@ -33,7 +26,7 @@ export default function init() {
   // the Google Maps script if it is
   // successfully loaded.
   // @ts-ignore
-  window[CALLBACK_NAME] = () => resolveInitPromise(window.google)
+  window[MAP_CALLBACK_NAME] = () => resolveInitPromise(window.google)
 
   // We inject a new script tag into
   // the `<head>` of our HTML to load
@@ -41,7 +34,7 @@ export default function init() {
   const script = document.createElement('script')
   script.async = true
   script.defer = true
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=${CALLBACK_NAME}`
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${MAP_API_KEY}&callback=${MAP_CALLBACK_NAME}`
   script.onerror = rejectInitPromise
   document.querySelector('head').appendChild(script)
 
