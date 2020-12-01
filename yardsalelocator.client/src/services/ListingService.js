@@ -62,7 +62,6 @@ class ListingService {
   }
 
   feetCheck(listing) {
-    console.log(listing)
     if (listing.distance && listing.distance.split(' ')[1] === 'ft') {
       return 1
     } else {

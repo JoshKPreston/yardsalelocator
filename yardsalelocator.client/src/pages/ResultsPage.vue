@@ -7,13 +7,16 @@
         </h2>
       </col-12>
     </div>
-    <div class="row align-items-center">
+    <!-- <div class="row align-items-center">
       <ListingComponent v-for="listing in listings"
                         :key="listing"
                         :listing-prop="listing"
                         :location-prop="location"
                         :tag-prop="searchTags"
       />
+    </div> -->
+    <div class="row align-items-center">
+      <MapComponent />
     </div>
   </div>
 </template>
@@ -23,7 +26,8 @@ import { computed, onMounted, reactive } from 'vue'
 import { AppState, getters } from '../AppState'
 import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
-import ListingComponent from '../components/ListingComponent'
+// import ListingComponent from '../components/ListingComponent'
+import MapComponent from '../components/MapComponent'
 import { setAuth } from '../services/AxiosService'
 
 export default {
@@ -49,7 +53,7 @@ export default {
 
     }
   },
-  components: { ListingComponent }
+  components: { MapComponent }
 }
 </script>
 
