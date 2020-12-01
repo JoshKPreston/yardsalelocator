@@ -1,11 +1,11 @@
 <template>
   <div class="results container-fluid justify-content-center ">
-    <div class="row custom-height">
-      <col-12 class="text-center w-100 align-self-center">
-        <h2 class="">
+    <div class="row">
+      <div class="col-12 custom-height text-center w-100 align-self-center text-white">
+        <h5>
           {{ listingDistance.length }} yard sales in your area!
-        </h2>
-      </col-12>
+        </h5>
+      </div>
     </div>
     <!-- <div class="row align-items-center">
       <ListingComponent v-for="listing in listings"
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-.custom-height{
-  height: 20vh;
+.custom-height {
+  height: 5vh;
 }
 </style>
