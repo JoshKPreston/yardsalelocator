@@ -2,7 +2,7 @@
 
 // Your personal API key.
 // Get it here: https://console.cloud.google.com/google/maps-apis
-const API_KEY = 'AIzaSyBQJfGPc1OC7pA1ynFg9mHGmq0-H0mz3Qs'
+const API_KEY = 'AIzaSyA3d9hA6pbLww_QEaABa94ZqMpGs_Anmrc'
 const CALLBACK_NAME = 'initMap'
 
 // @ts-ignore
