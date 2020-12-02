@@ -62,9 +62,13 @@ export default {
               <span>${zip}</span>
             </div>
             <p>tags: ${listing.tags}</p>
-            <div class="float-right">
-              <button id="mapViewListingBtn_${listing.id}" onClick="router.push({ name: 'Listing', params: { listingId: '${listing.id}' }})">View Listing</button>
-              <button>Get Directions</button>
+            <div class="d-flex justify-content-between">
+              <a class="d-block p-1 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">
+                <button class="btn btn-primary btn-sm custom-font-size">View Listing</button>
+              </a>
+              <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
+                <button class="btn btn-secondary btn-sm custom-font-size">Get Directions</button>
+              </a>
             </div>
           </div>
           `
@@ -82,6 +86,7 @@ export default {
     })
     return {
 
+      // <button id="mapViewListingBtn_${listing.id}">View Listing</button>
       // viewListing(id) {
       //     router.push({ name: 'Listing', params: { listingId: id } })
       //   }
@@ -157,4 +162,18 @@ body {
   width: 100vw;
   height: 84vh;
 }
+
+.gm-style-iw,
+.gm-style-iw-c {
+  padding: 1vh !important;
+}
+
+.gm-style-iw-d {
+  overflow: hidden !important;
+}
+
+.custom-font-size {
+  font-size: 12px;
+}
+
 </style>
