@@ -38,7 +38,8 @@ export default {
         await AppState.listings.map(listing => new google.maps.Marker(
           {
             position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
-            map: map
+            map: map,
+            infoWindow: '<h1> this is my info</h1>'
           }
         ))
       } catch (error) {
