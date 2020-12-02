@@ -1,4 +1,5 @@
 <template>
+  <div id="targetId"></div>
   <div id="map" class="App"></div>
 </template>
 
@@ -62,17 +63,17 @@ export default {
             </div>
             <p>tags: ${listing.tags}</p>
             <div class="float-right">
-              <button id="${listing.id}" @click ="viewListing('${listing.id}')">View Listing</button>
+              <button id="mapViewListingBtn_${listing.id}" onClick="router.push({ name: 'Listing', params: { listingId: '${listing.id}' }})">View Listing</button>
               <button>Get Directions</button>
             </div>
           </div>
           `
-
           const infowindow = new google.maps.InfoWindow({
             content: template
           })
           marker.addListener('click', () => {
             infowindow.open(map, marker)
+            // document.getElementById('mapViewListingBtn_' + listing.id).setAttribute('@click', 'viewListing(' + listing.id + ')')
           })
         })
       } catch (error) {
