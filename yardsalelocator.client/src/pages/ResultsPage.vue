@@ -29,6 +29,7 @@ import { listingService } from '../services/ListingService'
 // import ListingComponent from '../components/ListingComponent'
 import MapComponent from '../components/MapComponent'
 import { setAuth } from '../services/AxiosService'
+import router from '../router'
 
 export default {
   name: 'Results',
@@ -49,7 +50,10 @@ export default {
       // listings: computed(() => AppState.listings.sort((a, b) => (a.distance > b.distance) ? 1 : -1)),
       listings: computed(() => getters.listings),
       searchTags: computed(() => AppState.searchTags),
-      listingDistance: computed(() => AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance))
+      listingDistance: computed(() => AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)),
+      viewListing(id) {
+        router.push({ name: 'Listing', params: { listingId: id } })
+      }
 
     }
   },

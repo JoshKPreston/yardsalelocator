@@ -35,18 +35,55 @@ export default {
         // map.setZoom(10)
 
         // NOTE markers
-        await AppState.listings.map(listing => new google.maps.Marker(
-          {
+        // await AppState.listings.map(listing => new google.maps.Marker(
+        //   {
+        //     position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
+        //     map: map
+        //   }
+        // ))
+        await AppState.listings.forEach(listing => {
+          const marker = new google.maps.Marker({
             position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
-            map: map,
-            infoWindow: '<h1> this is my info</h1>'
-          }
-        ))
+            map: map
+          })
+          const address = listing.address.split(',')
+          const street = address[0]
+          const city = address[1]
+          const state = address[2].split(' ')[1]
+          const zip = address[2].split(' ')[2]
+          // eslint-disable-next-line quotes
+          const template = /* html */ `
+          <div>
+            <div class = "mb-2">
+              <h6>${street}</h6>
+              <span>${city}</span>
+              <span>${state}</span>
+              <span>${zip}</span>
+            </div>
+            <p>tags: ${listing.tags}</p>
+            <div class="float-right">
+              <button id="${listing.id}" @click ="viewListing('${listing.id}')">View Listing</button>
+              <button>Get Directions</button>
+            </div>
+          </div>
+          `
+
+          const infowindow = new google.maps.InfoWindow({
+            content: template
+          })
+          marker.addListener('click', () => {
+            infowindow.open(map, marker)
+          })
+        })
       } catch (error) {
         logger.error(error)
       }
     })
     return {
+
+      // viewListing(id) {
+      //     router.push({ name: 'Listing', params: { listingId: id } })
+      //   }
       // userLocation: computed(() => AppState.userLocation),
       // listings: computed(() => AppState.listings)
     }
