@@ -12,7 +12,7 @@
         </div>
       </div>
     </div> -->
-    <div class="row height-custom align-items-center" v-if="listings.length > 0">
+    <div class="row height-custom align-items-center p-3" v-if="listings.length > 0">
       <div class="col-12 d-flex justify-content-start">
         <h5 class="m-0">
           Current Listing
@@ -158,7 +158,7 @@
     </div> -->
     <!-- // NOTE new listing form -->
     <div
-      class="row justify-content-center align-items-center height-custom border-bottom"
+      class="row justify-content-center align-items-center height-custom"
       data-toggle="collapse"
       href="#newListing"
       role="button"
@@ -273,12 +273,14 @@
             </div>
           </div>
           <div class="row">
-            <div v-if="!state.newListing.img" class="col-12">
+            <!-- <div v-if="!state.newListing.img" class="col-12"> -->
+            <div class="col-12">
               <progress class="w-100 h-50" value="0" max="100" id="uploader">
                 0%
               </progress>
             </div>
-            <div v-else class="col-12 text-center">
+            <!-- <div v-else class="col-12 text-center"> -->
+            <div v-if="state.newListing.img" class="col-12 text-center">
               <img class="img-fluid" :src="state.newListing.img" alt="img">
             </div>
           </div>
@@ -415,16 +417,27 @@ export default {
         //   contentType: 'image/*'
         // }
 
-        const uploadTask = imageRefFilePath.put(state.imgFile[0])
-
-        uploadTask.on('state_changed',
+        imageRefFilePath.put(state.imgFile[0]).on('state_changed',
           function progress(snapshot) {
             const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             uploader.value = percentage
+            if (uploader.value === 100) {
+              // FIXME ssshhhh this is a secret
+              setTimeout(async() => {
+                state.newListing.img = await imageRefFilePath.getDownloadURL()
+                logger.log('img: ' + state.newListing.img)
+              }, 500)
+            }
           }
         )
-        state.newListing.img = await imageRefFilePath.getDownloadURL()
-        logger.log('img: ' + state.newListing.img)
+
+        // .then(
+        //   async res => {
+        //     state.newListing.img = await imageRefFilePath.getDownloadURL()
+        //     logger.log('img: ' + state.newListing.img)
+        //   }
+        // )
+        // setTimeout(() => { state.newListing.img = imageRefFilePath.getDownloadURL() }, 5000)
       }
     }
   }
