@@ -22,7 +22,7 @@
 
     <div
       id="currentListings"
-      class="current-listings row justify-content-start align-items-center w-100"
+      class="current-listings row justify-content-start align-items-center"
     >
       <CurrentListingComponent
         v-for="listing in listings"
