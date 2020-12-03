@@ -1,12 +1,12 @@
 <template>
   <div class="tag-input-component">
     <div v-for="(tag, index) in tags" :key="tag" class="tag-input__tag">
-      <span @click="removeTag(index)">x</span>
+      <span class="mr-2 text-danger" @click="removeTag(index)">&times;</span>
       {{ tag }}
     </div>
     <input type="text"
-           placeholder="  Enter a Tag"
-           class="tag-input__text w-100 bg-white my-2 rounded"
+           placeholder="Enter a Tag"
+           class="form-control tag-input__text w-100 bg-white my-2 rounded"
            @keydown.enter="addTag"
            @keydown.space="addTag"
            @keydown.delete="removeLastTag"
@@ -45,7 +45,7 @@ export default {
 <style scoped>
 .tag-input {
   width: 100%;
-  border: 1px solid #eee;
+  border: 1px solid rgb(131, 196, 129);
   font-size: 0.9em;
   height: 50px;
   box-sizing: border-box;
@@ -55,12 +55,13 @@ export default {
 .tag-input__tag {
   height: 30px;
   float: left;
-  margin-right: 10px;
-  background-color: #eee;
-  margin-top: 10px;
+  margin: .5vh;
+  border: 1px solid rgb(131, 196, 129);
   line-height: 30px;
-  padding: 0 5px;
-  border-radius: 5px;
+  padding: 0 1vh;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
 }
 
 .tag-input__tag > span {
@@ -74,6 +75,6 @@ export default {
   font-size: 1em;
   line-height: 35px;
   background: none;
-
+  padding: 6px 12px;
 }
 </style>

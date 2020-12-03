@@ -1,5 +1,5 @@
 <template>
-  <div class="results container-fluid justify-content-center ">
+  <div class="results container-fluid justify-content-center">
     <div class="row">
       <div class="col-12 custom-height text-center w-100 align-self-center text-white">
         <h5>

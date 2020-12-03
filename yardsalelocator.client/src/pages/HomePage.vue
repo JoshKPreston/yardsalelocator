@@ -1,6 +1,6 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center container-fluid justify-content-center">
-    <div class="display-3 row title-height">
+    <div class="display-3 row title-height text-light">
       MilkShake
     </div>
     <div class="row justify-content-center top-margin w-100">
@@ -18,10 +18,8 @@
              aria-expanded="false"
              aria-controls="advancedSearchCollapse"
         >
-          <i class="fas fa-list custom-icon mr-2"></i>
-          <p class="mb-0">
-            Advanced Search
-          </p>
+          <i class="fas fa-list custom-icon mr-2 text-light"></i>
+          <span class="text-light align-self-center">Advanced Search</span>
         </div>
         <div class="collapse col-12" id="advancedSearchCollapse">
           <div class="card card-body">

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-transparent">
+  <nav class="navbar navbar-expand bg-transparent text-light">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
       </div>
@@ -17,10 +17,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-if="route.name === 'Results'">
-          <router-link :to="{ name: 'Home' }" class="nav-link text-dark p-0 pr-3">
-            Back
-          </router-link>
+        <li @click="goBack" class="nav-item nav-link text-light p-0 pr-3" v-if="route.name !== 'Home'">
+          BACK
         </li>
       </ul>
       <span class="navbar-text">
@@ -34,7 +32,7 @@
 
         <div class="dropdown" v-else>
           <div
-            class="dropdown-toggle text-dark"
+            class="dropdown-toggle text-light"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
@@ -101,6 +99,9 @@ export default {
       },
       async logout() {
         await AuthService.logout({ returnTo: window.location.origin })
+      },
+      goBack() {
+        router.go(-1)
       }
     }
   }

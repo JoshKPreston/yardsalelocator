@@ -1,32 +1,19 @@
 <template>
-  <div
-    class="profile-page flex-grow-1 d-flex flex-column align-items-center container-fluid"
-  >
-    <div class="row height-custom align-items-center border-top w-100">
+  <div class="profile-page container-fluid text-light">
+    <!-- <div class="row height-custom align-items-center w-100">
       <div class="col-12 d-flex justify-content-center">
         <div>
-          <h1 class="m-0">
+          <h3 class="m-0">
             Welcome
-          </h1>
+          </h3>
           <p class="text-center">
             {{ profile.name }}
           </p>
         </div>
       </div>
-    </div>
-    <div
-      class="row height-custom align-items-center border-top w-100"
-      data-toggle=""
-      href="#currentListings"
-      role="button"
-      aria-expanded="false"
-      aria-controls="currentListings"
-      v-if="listings.length > 0"
-    >
-      <div class="col-1 d-flex justify-content-start">
-        <span class="d-block"></span>
-      </div>
-      <div class="col-10 d-flex justify-content-start">
+    </div> -->
+    <div class="row height-custom align-items-center" v-if="listings.length > 0">
+      <div class="col-12 d-flex justify-content-start">
         <h5 class="m-0">
           Current Listing
         </h5>
@@ -37,28 +24,27 @@
       id="currentListings"
       class="current-listings row justify-content-start align-items-center w-100"
     >
-      <b><CurrentListingComponent
+      <CurrentListingComponent
         v-for="listing in listings"
         :key="listing"
         :listing-prop="listing"
         :location-prop="location"
       />
-      </b>
       <div v-if="listings[0]" class="w-100 d-flex justify-content-between align-items-center pl-3">
         <button :class="listings[0].isOpen ? 'btn btn-warning btn-block' : 'btn btn-success btn-block'" @click.prevent="toggleOpen">
           {{ listings[0].isOpen ? 'Close Yard Sale' : 'Open Yard Sale' }}
         </button>
         <div class="m-3 d-flex">
-          <div
+          <!-- <div
             class=""
             data-toggle="collapse"
             href="#editListing"
             role="button"
             aria-expanded="false"
             aria-controls="editListing"
-          >
-            <i class="fas fa-edit fa-2x mr-2"></i>
-          </div>
+          > -->
+          <!-- <i class="fas fa-edit fa-2x mr-2"></i> -->
+          <!-- </div> -->
           <i class="fas fa-trash fa-2x text-danger" @click.prevent="deleteListing">
           </i>
         </div>

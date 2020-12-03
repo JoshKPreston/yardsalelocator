@@ -55,19 +55,19 @@ export default {
           // eslint-disable-next-line quotes
           const template = /* html */ `
           <div>
-            <div class = "mb-2">
-              <h6>${street}</h6>
+            <div class = "mb-2 custom-address-font-size">
+              <span>${street}</span><br>
               <span>${city}</span>
               <span>${state}</span>
               <span>${zip}</span>
             </div>
             <p>tags: ${listing.tags}</p>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-around align-items-center">
               <a class="d-block p-1 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">
-                <button class="btn btn-primary btn-sm custom-font-size">View Listing</button>
+                <i class="fas fa-binoculars fa-2x text-primary"></i>
               </a>
               <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
-                <button class="btn btn-secondary btn-sm custom-font-size">Get Directions</button>
+                <i class="fas fa-map fa-2x text-secondary"></i>
               </a>
             </div>
           </div>
@@ -84,16 +84,11 @@ export default {
         logger.error(error)
       }
     })
-    return {
-
-      // <button id="mapViewListingBtn_${listing.id}">View Listing</button>
-      // viewListing(id) {
-      //     router.push({ name: 'Listing', params: { listingId: id } })
-      //   }
-      // userLocation: computed(() => AppState.userLocation),
-      // listings: computed(() => AppState.listings)
-    }
   }
+  // <button class="btn btn-primary btn-sm custom-btn-font-size">View Listing</button>
+  // <button class="btn btn-secondary btn-sm custom-btn-font-size">Get Directions</button>
+  // userLocation: computed(() => AppState.userLocation),
+  // listings: computed(() => AppState.listings)
   // async mounted() {
   // const locations = [
   //   {
@@ -172,8 +167,12 @@ body {
   overflow: hidden !important;
 }
 
-.custom-font-size {
-  font-size: 12px;
+.custom-address-font-size {
+  font-size: 3vh;
+}
+
+.custom-btn-font-size {
+  font-size: 2vh;
 }
 
 </style>

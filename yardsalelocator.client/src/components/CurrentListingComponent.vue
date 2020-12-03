@@ -1,7 +1,7 @@
 <template>
   <div class="current-listing-component row justify-content-start border-top p-3" v-if="listing.profile.id === profile.id">
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
-    <div class="col-12" @click="getListing()">
+    <div class="col-12 text-light" @click="getListing()">
       <li>
         {{ listing.address }}
       </li>
