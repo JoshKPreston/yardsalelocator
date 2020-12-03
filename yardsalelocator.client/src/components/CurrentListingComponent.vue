@@ -1,14 +1,16 @@
 <template>
-  <div class="current-listing-component row justify-content-start border-top p-3" v-if="listing.profile.id === profile.id">
+  <div class="current-listing-component col-12 justify-content-start p-3" v-if="listing.profile.id === profile.id">
     <!-- <div v-if="parseInt(listing.distance.split(' ')[0]) > distance"> -->
-    <div class="col-12 text-light" @click="getListing()">
-      <li>
-        {{ listing.address }}
-      </li>
-      <li>
-        Distance: {{ listing.distance }}
-      </li>
+    <div class="row border-top">
+      <div class="col-12 text-light" @click="getListing()">
+        <li>
+          {{ listing.address }}
+        </li>
+        <li>
+          Distance: {{ listing.distance }}
+        </li>
       <!-- </div> -->
+      </div>
     </div>
   </div>
 </template>
