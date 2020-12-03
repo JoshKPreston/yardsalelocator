@@ -56,9 +56,10 @@
         Close Yard Sale
       </button> -->
     </div>
-    <div id="editListing" class="collapse">
+    <!-- // NOTE edit -->
+    <!-- <div id="editListing" class="collapse">
       <form @submit.prevent="createListing()" class="form-row">
-        <!-- num of days open -->
+        num of days open
         <div class="form-group col-12 pl-2">
           <div class="form-check form-check-inline">
             <label class="form-check-label">Days Open</label>
@@ -96,10 +97,10 @@
             />
             <label class="form-check-label" for="newListingDaysOpenThree">3</label>
           </div>
-        </div>
-        <!-- img upload -->
-        <div class="form-group col-12">
-          <!-- <input
+        </div> -->
+    <!-- img upload -->
+    <!-- <div class="form-group col-12"> -->
+    <!-- <input
             type="file"
             name="newListingImgFileUpload"
             id="newListingImgFileUpload"
@@ -107,14 +108,14 @@
             aria-describedby="helpId"
             accept="image/*"
           /> -->
-          <!-- <div class="custom-file">
+    <!-- <div class="custom-file">
             <input type="file" class="custom-file-input" id="newListingImgFileUpload" name="newListingImgFileUpload" accept="image/*">
             <label class="custom-file-label" for="newListingImgFileUpload">Choose file...</label>
             <div class="invalid-feedback">
               Image file type only
             </div>
           </div> -->
-          // NOTE this is the outer form
+    <!-- // NOTE this is the outer form
           <div class="input-group mb-3">
             <div class="custom-file">
               <input @change="onFileSelected" type="file" class="custom-file-input" id="newListingImgFileUpload" accept="image/*">
@@ -129,9 +130,9 @@
               <img class="img-fluid" :src="state.newListing.img" alt="img">
             </div>
           </div>
-        </div>
-        <!-- description -->
-        <div class="form-group col-12">
+        </div> -->
+    <!-- description -->
+    <!-- <div class="form-group col-12">
           <textarea
             v-model="state.newListing.description"
             rows="3"
@@ -154,9 +155,10 @@
           </button>
         </div>
       </form>
-    </div>
+    </div> -->
+    <!-- // NOTE new listing form -->
     <div
-      class="row align-items-center border-top w-100 height-custom border-bottom"
+      class="row justify-content-center align-items-center height-custom border-bottom"
       data-toggle="collapse"
       href="#newListing"
       role="button"
@@ -175,11 +177,11 @@
     </div>
     <div
       id="newListing"
-      class="post-new-listing row justify-content-start align-items-center w-100 collapse"
+      class="post-new-listing row align-items-center collapse"
     >
-      <form @submit.prevent="createListing()" class="form-row">
+      <form @submit.prevent="createListing()" class="form-row p-3">
         <!-- address -->
-        <div class="form-group col-12">
+        <div class="form-group col-12 d-flex flex-column justify-content-center">
           <input
             v-model="state.newListing.address"
             type="text"
@@ -202,7 +204,7 @@
             aria-describedby="helpId"
           />
         </div>
-        <div class="form-group col-12 pl-2">
+        <div class="form-group col-12">
           <TagInputComponent />
         </div>
         <!-- num of days open -->
@@ -270,9 +272,14 @@
               <span @click="onUpload" class="input-group-text" id="newListingImgFileAddon">Upload</span>
             </div>
           </div>
-          <div class="row justify-content-around">
-            <div class="col-3">
-              <img class="img-fluid" :src="state.newListing.imgUrl" alt="img">
+          <div class="row">
+            <div v-if="!state.newListing.img" class="col-12">
+              <progress class="w-100 h-50" value="0" max="100" id="uploader">
+                0%
+              </progress>
+            </div>
+            <div v-else class="col-12 text-center">
+              <img class="img-fluid" :src="state.newListing.img" alt="img">
             </div>
           </div>
         </div>
@@ -318,12 +325,12 @@
         </h5>
       </div>
     </div> -->
-    <div
+    <!-- <div
       id="history"
       class="history row justify-content-start align-items-center w-100 collapse"
     >
       this is the history div data toggle
-    </div>
+    </div> -->
     <!-- <h1>Welcome {{ profile.name }}</h1>
     <img class="rounded" :src="profile.picture" alt="" />
     <p>{{ profile.email }}</p> -->
@@ -400,6 +407,7 @@ export default {
         state.imgFile = e.target.files
       },
       async onUpload() {
+        const uploader = document.getElementById('uploader')
         // const imageRefFileName = state.storageRef.child(state.newListing.imgFile)
         const imageRefFilePath = await state.storageRef.child('images/' + state.imgFile[0].name)
         // const file = document.getElementById('newListingImgFile').files[0]
@@ -407,17 +415,16 @@ export default {
         //   contentType: 'image/*'
         // }
 
-        // const uploadTask =
-        await imageRefFilePath.put(state.imgFile[0]).then(snapshot => {
-          logger.log(snapshot)
-          logger.log('Uploaded file!')
-        })
+        const uploadTask = imageRefFilePath.put(state.imgFile[0])
 
+        uploadTask.on('state_changed',
+          function progress(snapshot) {
+            const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            uploader.value = percentage
+          }
+        )
         state.newListing.img = await imageRefFilePath.getDownloadURL()
         logger.log('img: ' + state.newListing.img)
-        // uploadTask.on(FirebaseStorage.TaskEvent.STATE_CHANGED)
-
-        // gs://yard-sale-locator-82b72.appspot.com
       }
     }
   }
@@ -426,7 +433,7 @@ export default {
 
 <style scoped>
 img {
-  max-width: 100px;
+  background-size: contain;
 }
 div[aria-expanded="true"] .fa-caret-right {
   transition: 0.2s transform ease-in-out;
@@ -438,4 +445,22 @@ div[aria-expanded="false"] .fa-caret-right {
 .height-custom{
   height: 10vh;
 }
+
+#uploader {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+progress::-webkit-progress-value {background-color: #F1B24A !important;}
+progress::-webkit-progress-bar {background-color: #4D774E; width: 100%;}
+
+/* $body-bg: #164A41;
+$primary: #4D774E;
+$secondary: #F1B24A;
+$light: #FFFFFF;
+$danger: #EB5757;
+$success: #27AE60;
+$warning: #FF7F50;
+$info: #00C9BD;
+$dark: #313130; */
 </style>
