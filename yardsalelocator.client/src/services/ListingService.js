@@ -25,11 +25,16 @@ class ListingService {
       // eslint-disable-next-line no-console
       // console.log(origin)
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
-      destination.distance = res.data.routes.car.distance.text
-      // const index = AppState.listings.findIndex(listing => listing === destination)
-      // if (index >= 0) {
-      //   AppState.listings[index].distance = res.data.routes.car.distance.text
-      // }
+      // destination.distance = res.data.routes.car.distance.text
+
+      // console.log('Destination:', destination)
+      // console.log('Listings:', AppState.listings)
+      // console.log('ResData:', res.data.routes.car.distance.text)
+
+      const index = AppState.listings.findIndex(listing => listing.id === destination.id)
+      if (index >= 0) {
+        AppState.listings[index].distance = res.data.routes.car.distance.text
+      }
     } catch (error) {
       logger.error(error)
     }
