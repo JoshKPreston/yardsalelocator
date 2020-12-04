@@ -19,13 +19,14 @@ export default {
       await setAuth()
       await locationService.getGeoLocation()
       await listingService.getAll()
-      AppState.userLocation.distance = JSON.parse(window.localStorage.getItem('distance'))
-      // AppState.searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
+      // AppState.userLocation.distance = await JSON.parse(window.localStorage.getItem('distance'))
+      AppState.searchTags = await JSON.parse(window.localStorage.getItem('searchTags'))
       await AppState.listings.forEach(listing => {
         listingService.getDistance(AppState.userLocation, listing)
       })
       await setTimeout(async() => {
         try {
+          AppState.userLocation.distance = JSON.parse(window.localStorage.getItem('distance'))
           const google = await gmapsInit()
           // const geocoder = new google.maps.Geocoder()
           // const map = new google.maps.Map(this.$el)
@@ -45,15 +46,40 @@ export default {
           // ))
 
           await AppState.listings.forEach(listing => {
+            // const iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+            const iconBase = 'http://maps.google.com/mapfiles/ms/icons'
             const marker = new google.maps.Marker({
               position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
-              map: map
+              map: map,
+              icon: iconBase + '/red-dot.png'
             })
             const address = listing.address.split(',')
             const street = address[0]
             const city = address[1]
             const state = address[2].split(' ')[1]
             const zip = address[2].split(' ')[2]
+            if (listing.distance <= AppState.userLocation.distance) marker.setIcon(iconBase + '/purple-dot.png')
+
+            // function setOpenMarkerColor() {
+            // if (location.isOpen === true) marker.setIcon(iconBase + '/green-dot.png')
+            // }
+
+            // function setTagMatchMarkerColor() {
+            //   for (let i = 0; i < AppState.searchTags.length; i++) {
+            //     const curSearchTag = AppState.searchTags[i]
+            //     for (let j = 0; j < listing.tags.length; j++) {
+            //       const curListTag = listing.tags[j]
+            //       if (curSearchTag === curListTag) {
+            //         marker.setIcon(iconBase + '/blue-dot.png')
+            //       }
+            //     }
+            //   }
+            // }
+
+            // function setInRangeMarkerColor() {
+            //   if (listing.distance <= AppState.userLocation.distance) marker.setIcon(iconBase + '/purple-dot.png')
+            // }
+
             // eslint-disable-next-line quotes
             const template = /* html */ `
           <div>
@@ -86,7 +112,7 @@ export default {
         } catch (error) {
           logger.error(error)
         }
-      }, 500)
+      }, 1000)
     })
   }
   // <button class="btn btn-primary btn-sm custom-btn-font-size">View Listing</button>
