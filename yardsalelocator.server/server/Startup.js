@@ -23,10 +23,10 @@ export default class Startup {
         contentSecurityPolicy: {
           directives: {
             defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", `https://${domain}/*`],
+            scriptSrc: ["'self'", `https://${domain}/*`, 'https://maps.googleapis.com/*', 'https://api.radar.io/*', 'https://bcwclassroom.us.auth0.com/*'],
             styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
             imgSrc: ["'self'", '*.githubusercontent.com', '*.blob.core.windows.net', '*'],
-            connectSrc: ["'self'", `https://${domain}/oauth/token`, `https://${domain}/userinfo`],
+            connectSrc: ["'self'", `https://${domain}/oauth/token`, `https://${domain}/userinfo`, 'https://api.radar.io/*', 'https://bcwclassroom.us.auth0.com/*'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com'],
             objectSrc: ["'self'"],
             mediaSrc: ["'self'"],
