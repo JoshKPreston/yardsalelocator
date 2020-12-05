@@ -23,7 +23,7 @@ export default class Startup {
         contentSecurityPolicy: {
           directives: {
             defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", `https://${domain}/*`, 'https://maps.googleapis.com/*', 'https://api.radar.io/*', 'https://bcwclassroom.us.auth0.com/*', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', 'https://code.jquery.com/jquery-3.4.1.slim.min.js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'],
+            scriptSrc: ["'self'", `https://${domain}/*`, 'https://maps.googleapis.com/*', 'https://api.radar.io/*', 'https://bcwclassroom.us.auth0.com/*', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', 'https://code.jquery.com/jquery-3.4.1.slim.min.js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', '*'],
             styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
             imgSrc: ["'self'", '*.githubusercontent.com', '*.blob.core.windows.net', '*'],
             connectSrc: ["'self'", `https://${domain}/oauth/token`, `https://${domain}/userinfo`, 'https://api.radar.io/*', 'https://bcwclassroom.us.auth0.com/*'],
