@@ -1,7 +1,8 @@
 import Axios from 'axios'
 import { authHeader } from '../AuthConfig'
 
-const baseURL = window.location.origin.includes('localhost') ? 'http://localhost:3000' : ''
+const baseURL = window.location.origin.includes('localhost') ? 'http://localhost:3000' : 'https://yard-sale-locator.herokuapp.com'
+
 export const api = Axios.create({
   baseURL,
   timeout: 8000

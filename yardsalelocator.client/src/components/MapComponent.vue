@@ -94,7 +94,7 @@ export default {
             <p class="m-0">${listing.distance}</p>
             <p>tags: ${listing.tags}</p>
             <div class="d-flex justify-content-around align-items-center">
-              <a class="d-block p-1 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">
+              <a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">
                 <i class="fas fa-binoculars fa-2x text-primary"></i>
               </a>
               <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
