@@ -52,8 +52,8 @@ export default {
             if (listDistance <= searchDistance) {
               const marker = new google.maps.Marker({
                 position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
-                map: map
-                // icon: iconBase + '/red-dot.png'
+                map: map,
+                icon: iconBase + '/red-dot.png'
               })
               const address = listing.address.split(',')
               const street = address[0]
