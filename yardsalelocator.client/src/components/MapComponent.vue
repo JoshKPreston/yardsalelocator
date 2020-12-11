@@ -47,20 +47,20 @@ export default {
           await AppState.listings.forEach(listing => {
             const searchDistance = JSON.parse(window.localStorage.getItem('distance'))
             const listDistance = listingService.feetCheck(listing)
-            const iconBase = 'http://maps.google.com/mapfiles/ms/icons'
+            // const iconBase = 'http://maps.google.com/mapfiles/ms/icons'
 
             if (listDistance <= searchDistance) {
               const marker = new google.maps.Marker({
                 position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
-                map: map,
-                icon: iconBase + '/red-dot.png'
+                map: map
+                // icon: iconBase + '/red-dot.png'
               })
               const address = listing.address.split(',')
               const street = address[0]
               const city = address[1]
               const state = address[2].split(' ')[1]
               const zip = address[2].split(' ')[2]
-              const searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
+              // const searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
               const startDate = new Date(listing.startDate).toLocaleDateString()
               const expireDate = new Date(listing.expireAt).toLocaleDateString()
 
@@ -69,15 +69,15 @@ export default {
               // function setOpenMarkerColor() {
               //   if (location.isOpen === true) marker.setIcon(iconBase + '/green-dot.png')
               // }
-              for (let i = 0; i < searchTags.length; i++) {
-                const curSearchTag = searchTags[i]
-                for (let j = 0; j < listing.tags.length; j++) {
-                  const curListTag = listing.tags[j]
-                  if (curSearchTag === curListTag) {
-                    marker.setIcon(iconBase + '/blue-dot.png')
-                  }
-                }
-              }
+              // for (let i = 0; i < searchTags.length; i++) {
+              //   const curSearchTag = searchTags[i]
+              //   for (let j = 0; j < listing.tags.length; j++) {
+              //     const curListTag = listing.tags[j]
+              //     if (curSearchTag === curListTag) {
+              //       marker.setIcon(iconBase + '/blue-dot.png')
+              //     }
+              //   }
+              // }
 
               // function setInRangeMarkerColor() {
               //   if (listing.distance <= AppState.userLocation.distance) marker.setIcon(iconBase + '/purple-dot.png')
