@@ -402,7 +402,7 @@ export default {
         }
       },
       async deleteListing() {
-        await listingService.deleteListing(this.listings[0].id)
+        if (window.confirm('Are you sure you want to delete your listing?')) await listingService.deleteListing(this.listings[0].id)
       },
       onFileSelected(e) {
         logger.log(e)
