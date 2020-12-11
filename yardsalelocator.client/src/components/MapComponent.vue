@@ -60,52 +60,62 @@ export default {
               const city = address[1]
               const state = address[2].split(' ')[1]
               const zip = address[2].split(' ')[2]
-              // const searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
+              const searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
               const startDate = new Date(listing.startDate).toLocaleDateString()
               const expireDate = new Date(listing.expireAt).toLocaleDateString()
 
-              // if (listDistance <= searchDistance) marker.setIcon(iconBase + '/purple-dot.png')
-
-              // function setOpenMarkerColor() {
-              //   if (location.isOpen === true) marker.setIcon(iconBase + '/green-dot.png')
-              // }
-              // for (let i = 0; i < searchTags.length; i++) {
-              //   const curSearchTag = searchTags[i]
-              //   for (let j = 0; j < listing.tags.length; j++) {
-              //     const curListTag = listing.tags[j]
-              //     if (curSearchTag === curListTag) {
-              //       marker.setIcon(iconBase + '/blue-dot.png')
+              // NOTE creating listing tag elements
+              // const listingTags = []
+              // listing.tags.forEach(listingTagName => {
+              //   const elem = document.createElement('span', { id: 'tag_' + listingTagName })
+              //   elem.innerText = listingTagName
+              //   searchTags.forEach(searchTagName => {
+              //     if (listingTagName === searchTagName) {
+              //       document.getElementById('tag_' + listingTagName).classList.add('matching-tag')
               //     }
-              //   }
-              // }
+              //   })
+              //   listingTags.push(elem)
+              // })
 
-              // function setInRangeMarkerColor() {
-              //   if (listing.distance <= AppState.userLocation.distance) marker.setIcon(iconBase + '/purple-dot.png')
-              // }
+              // NOTE change color of marker based on TAGS
+              let tagTemplate = ''
+              for (let i = 0; i < searchTags.length; i++) {
+                const curSearchTag = searchTags[i]
+                for (let j = 0; j < listing.tags.length; j++) {
+                  const curListTag = listing.tags[j]
+                  if (curSearchTag === curListTag) {
+                    // matchingArray.push(curSearchTag)
+                    tagTemplate += /* html */ `<span id="tag_${curSearchTag}" class="matching-tag">${curSearchTag}</span>`
+                  } else {
+                    tagTemplate += /* html */ `<span id="tag_${curListTag}">${curListTag}</span>`
+                  }
+                }
+              }
 
               // eslint-disable-next-line quotes
               const template = /* html */ `
-          <div>
-            <div class = "mb-2 custom-address-font-size">
-              <span>${street}</span><br>
-              <span>${city}</span>
-              <span>${state}</span>
-              <span>${zip}</span>
-            </div>
-            <p class="${listing.isOpen ? 'text-success' : 'text-danger'}">${listing.isOpen ? 'open' : 'closed'}</p>
-            <p >${startDate} - ${expireDate}</p>
-            <p class="m-0">${listing.distance}</p>
-            <p>tags: ${listing.tags}</p>
-            <div class="d-flex justify-content-around align-items-center">
-              <a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">
-                <i class="fas fa-binoculars fa-2x text-primary"></i>
-              </a>
-              <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
-                <i class="fas fa-map fa-2x text-secondary"></i>
-              </a>
-            </div>
-          </div>
-          `
+                <div>
+                  <div class = "mb-2 custom-address-font-size">
+                    <span>${street}</span><br>
+                    <span>${city}, ${state} ${zip}</span>
+                  </div>
+                  <span class="${listing.isOpen ? 'text-success' : 'text-danger'}">${listing.isOpen ? 'open' : 'closed'}</span><br>
+                  <span>${startDate} - ${expireDate}</span><br>
+                  <span>${listing.distance}</span>
+                  <!--<p>tags: ${listing.tags}</p>-->
+                  <div>
+                    ${tagTemplate}
+                  </div>
+                  <div class="d-flex justify-content-around align-items-center">
+                    <a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">
+                      <i class="fas fa-binoculars fa-2x text-primary"></i>
+                    </a>
+                    <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
+                      <i class="fas fa-map fa-2x text-secondary"></i>
+                    </a>
+                  </div>
+                </div>
+              `
               const infowindow = new google.maps.InfoWindow({
                 content: template
               })
@@ -209,6 +219,10 @@ body {
 
 .custom-btn-font-size {
   font-size: 2vh;
+}
+
+.matching-tag {
+  color: purple;
 }
 
 </style>
