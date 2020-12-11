@@ -14,6 +14,13 @@
         </span>
       </div>
     </div>
+    <div v-if="listing.startDate" class="row justify-content-center align-items-center p-2 text-white text-center">
+      <div class="col-12">
+        <span>
+          {{ new Date(listing.startDate).toLocaleDateString() }} - {{ new Date(listing.expireAt).toLocaleDateString() }}
+        </span>
+      </div>
+    </div>
     <div v-if="listing.img" class="row justify-content-center align-items-center">
       <img class="img-fluid custom-img-size" :src="listing.img" alt="img">
     </div>

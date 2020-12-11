@@ -61,6 +61,8 @@ export default {
               const state = address[2].split(' ')[1]
               const zip = address[2].split(' ')[2]
               const searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
+              const startDate = new Date(listing.startDate).toLocaleDateString()
+              const expireDate = new Date(listing.expireAt).toLocaleDateString()
 
               // if (listDistance <= searchDistance) marker.setIcon(iconBase + '/purple-dot.png')
 
@@ -91,6 +93,7 @@ export default {
               <span>${zip}</span>
             </div>
             <p class="${listing.isOpen ? 'text-success' : 'text-danger'}">${listing.isOpen ? 'open' : 'closed'}</p>
+            <p >${startDate} - ${expireDate}</p>
             <p class="m-0">${listing.distance}</p>
             <p>tags: ${listing.tags}</p>
             <div class="d-flex justify-content-around align-items-center">
