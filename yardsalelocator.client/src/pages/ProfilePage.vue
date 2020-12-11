@@ -347,6 +347,7 @@ import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Profile',
@@ -402,7 +403,18 @@ export default {
         }
       },
       async deleteListing() {
-        if (window.confirm('Are you sure you want to delete your listing?')) await listingService.deleteListing(this.listings[0].id)
+        // if (window.confirm('Are you sure you want to delete your listing?')) await listingService.deleteListing(this.listings[0].id)
+        await Swal.fire({
+          text: 'Are you sure you want to delete your listing?',
+          icon: 'warning',
+          confirmButtonText: 'Delete',
+          showCancelButton: true,
+          cancelButtonText: 'Cancel'
+        }).then(isConfirm => {
+          if (isConfirm.value) {
+            listingService.deleteListing(this.listings[0].id)
+          }
+        })
       },
       onFileSelected(e) {
         logger.log(e)
