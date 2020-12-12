@@ -182,10 +182,11 @@
       <form @submit.prevent="createListing()" class="form-row p-3">
         <!-- address -->
         <div class="form-group col-12 d-flex flex-column justify-content-center">
+          <label for="newListingAddress">Location of Yard Sale</label>
           <input
+            name="newListingAddress"
             v-model="state.newListing.address"
             type="text"
-            name="newListingAddress"
             id="newListingAddress"
             class="form-control"
             placeholder="Address, City, Zip"
@@ -203,7 +204,6 @@
             id="newListingStartDate"
             class="form-control"
             aria-describedby="helpId"
-            placeholder="Start Date"
           />
         </div>
         <div class="form-group col-12">
@@ -289,14 +289,15 @@
         </div>
         <!-- description -->
         <div class="form-group col-12">
+          <label for="newListingDescription">Description</label>
           <textarea
+            name="newListingDescription"
             v-model="state.newListing.description"
             rows="3"
             type="text"
-            name="newListingDescription"
             id="newListingDescription"
             class="form-control"
-            placeholder="Description"
+            placeholder="Enter text here..."
             aria-describedby="helpId"
           >
           </textarea>

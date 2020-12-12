@@ -4,12 +4,17 @@
       <span class="mr-2 text-danger" @click="removeTag(index)">&times;</span>
       {{ tag }}
     </div>
-    <input type="text"
-           placeholder="Enter a Tag"
-           class="form-control tag-input__text w-100 bg-white my-2 rounded"
-           @keydown.enter="addTag"
-           @keydown.space="addTag"
-           @keydown.delete="removeLastTag"
+    <!-- <label for="newListingTags">Tags</label> -->
+    <input
+      name="newListingTags"
+      type="text"
+      placeholder="Press comma after tag"
+      class="form-control tag-input__text w-100 bg-white my-2 rounded"
+      @keydown.enter="addTag"
+      @keydown.space="addTag"
+      @keydown.tab="addTag"
+      @keydown.delete="removeLastTag"
+      @keydown="handleKeyDown"
     />
   </div>
 </template>
@@ -34,6 +39,11 @@ export default {
       removeLastTag(event) {
         if (event.target.value.length === 0) {
           this.removeTag(this.tags.length - 1)
+        }
+      },
+      handleKeyDown(event) {
+        if ([','].includes(event.key)) {
+          this.addTag(event)
         }
       }
     }
