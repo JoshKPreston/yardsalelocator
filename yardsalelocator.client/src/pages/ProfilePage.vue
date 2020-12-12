@@ -417,6 +417,12 @@ export default {
         }).then(isConfirm => {
           if (isConfirm.value) {
             listingService.deleteListing(this.listings[0].id)
+            // state.storageRef.child('images/' + state.imgFile[0].name).delete()
+            try {
+              FirebaseStorage.refFromURL(this.listings[0].img).delete()
+            } catch (error) {
+              logger.error(error)
+            }
           }
         })
       },
