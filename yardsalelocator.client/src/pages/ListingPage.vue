@@ -41,7 +41,7 @@
         <span>{{ listing.description }}</span>
       </div>
     </div>
-    <div class="row justify-content-start align-items-center p-3">
+    <div v-if="listing.tags != null && listing.tags != undefined && Object.keys(listing.tags).length > 0" class="row justify-content-start align-items-center p-3">
       <div class="col-2">
         <span>Tags:</span>
       </div>

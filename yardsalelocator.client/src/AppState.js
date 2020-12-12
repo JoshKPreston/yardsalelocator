@@ -12,7 +12,10 @@ export const AppState = reactive({
   },
   listings: [],
   currentListing: {},
-  searchTags: []
+  searchTags: [],
+  markers: [],
+  // currentMarker: null
+  infowindow: null
 })
 
 export const getters = reactive({

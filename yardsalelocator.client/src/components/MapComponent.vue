@@ -6,7 +6,7 @@
 <script>
 import { logger } from '../utils/Logger'
 import gmapsInit from '../utils/gmaps'
-import { onMounted } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { setAuth } from '../services/AxiosService'
 import { locationService } from '../services/LocationService'
 import { listingService } from '../services/ListingService'
@@ -44,13 +44,14 @@ export default {
           //   }
           // ))
 
-          await AppState.listings.forEach(listing => {
+          await AppState.listings.forEach((listing, listingIndex) => {
             const searchDistance = JSON.parse(window.localStorage.getItem('distance'))
             const listDistance = listingService.feetCheck(listing)
             // const iconBase = 'http://maps.google.com/mapfiles/ms/icons'
 
             if (listDistance <= searchDistance) {
-              const marker = new google.maps.Marker({
+              // const marker =
+              AppState.markers[listingIndex] = new google.maps.Marker({
                 position: { lat: parseFloat(listing.lat), lng: parseFloat(listing.long) },
                 map: map
                 // icon: iconBase + '/red-dot.png'
@@ -112,32 +113,38 @@ export default {
               const template = /* html */ `
                 <div>
                   <div class = "mb-2 custom-address-font-size">
-                    <span>${street}</span><br>
-                    <span>${city}, ${state} ${zip}</span>
+                    <div>${street}</div>
+                    <div>${city}, ${state} ${zip}</div>
                   </div>
-                  <span class="${listing.isOpen ? 'text-success' : 'text-danger'}">${listing.isOpen ? 'open' : 'closed'}</span><br>
-                  <span>${startDate} - ${expireDate}</span><br>
-                  <span>${listing.distance}</span>
-                  <!--<p>tags: ${listing.tags}</p>-->
                   <div>
                     ${tagTemplate}
+                    <div class="custom-info-font-size">
+                      <div class="p-1">${startDate} - ${expireDate}</div>
+                      <div class="d-flex justify-content-around">
+                        <div class="${listing.isOpen ? 'p-1 text-success' : 'p-1 text-danger'}">${listing.isOpen ? 'open' : 'closed'}</div>
+                        <div class="p-1 align-self-end"><b>${listing.distance}</b></div>
+                      </div>
+                    </div>
                   </div>
+                  <!--<p>tags: ${listing.tags}</p>-->
                   <div class="d-flex justify-content-around align-items-center">
-                    <a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">
-                      <i class="fas fa-binoculars fa-2x text-primary"></i>
+                    <!--<a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">-->
+                    <a class="d-block p-2 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">
+                      <img class="custom-vue-img" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/vue/vue.png" alt="img" />
+                      <!--<i class="fas fa-binoculars fa-2x text-primary"></i>-->
                     </a>
-                    <a class="d-block p-1 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
-                      <i class="fas fa-map fa-2x text-secondary"></i>
+                    <a class="d-block p-2 text-nowrap" href="https://www.google.com/maps/dir/${AppState.userLocation.latitude},${AppState.userLocation.longitude}/${listing.lat},${listing.long}">
+                      <i class="fas fa-car fa-2x text-secondary"></i>
                     </a>
                   </div>
                 </div>
               `
-              const infowindow = new google.maps.InfoWindow({
-                content: template
-              })
-              marker.addListener('click', () => {
-                infowindow.open(map, marker)
-                // document.getElementById('mapViewListingBtn_' + listing.id).setAttribute('@click', 'viewListing(' + listing.id + ')')
+              AppState.markers[listingIndex].addListener('click', () => {
+                if (AppState.infowindow) AppState.infowindow.close()
+                AppState.infowindow = new google.maps.InfoWindow({
+                  content: template
+                })
+                AppState.infowindow.open(map, AppState.markers[listingIndex])
               })
             }
           })
@@ -146,6 +153,12 @@ export default {
         }
       }, 1000)
     })
+    const state = reactive({
+      markers: computed(() => AppState.markers)
+    })
+    return {
+      state
+    }
   }
   // <button class="btn btn-primary btn-sm custom-btn-font-size">View Listing</button>
   // <button class="btn btn-secondary btn-sm custom-btn-font-size">Get Directions</button>
@@ -233,12 +246,20 @@ body {
   font-size: 3vh;
 }
 
+.custom-info-font-size {
+  font-size: 2vh;
+}
+
 .custom-btn-font-size {
   font-size: 2vh;
 }
 
 .matching-tag {
   color: purple;
+}
+
+.custom-vue-img {
+  height: 3.5vh;
 }
 
 </style>
