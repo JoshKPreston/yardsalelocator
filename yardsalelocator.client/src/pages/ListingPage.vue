@@ -87,4 +87,9 @@ export default {
   .custom-img-size {
     background-size: contain;
   }
+  // @media (min-width: 992px) {
+  //   .custom-img-size {
+  //     max-width: 50vw;
+  //   }
+  // }
 </style>

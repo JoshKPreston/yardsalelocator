@@ -22,7 +22,7 @@ export default {
       tags: computed(() => AppState.searchTags),
       addTag(event) {
         event.preventDefault()
-        var val = event.target.value.trim()
+        var val = event.target.value.trim().toLowerCase()
         if (val.length > 0) {
           this.tags.push(val)
           event.target.value = ''

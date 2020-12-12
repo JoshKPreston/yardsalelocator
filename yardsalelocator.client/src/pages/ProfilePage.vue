@@ -353,6 +353,7 @@ export default {
   name: 'Profile',
   setup() {
     onMounted(async() => {
+      window.localStorage.removeItem('searchTags')
       await setAuth()
       await locationService.getGeoLocation()
       await listingService.getAll()
