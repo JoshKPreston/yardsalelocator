@@ -39,8 +39,13 @@ export default {
       userDistance: parseInt(AppState.userLocation.distance)
     })
     onMounted(async() => {
-      await setAuth()
-      await locationService.getGeoLocation()
+      if (JSON.parse(window.localStorage.getItem('latitude'))) {
+        AppState.userLocation.latitude = JSON.parse(window.localStorage.getItem('latitude'))
+        AppState.userLocation.longitude = JSON.parse(window.localStorage.getItem('longitude'))
+      } else {
+        await setAuth()
+        await locationService.getGeoLocation()
+      }
       await listingService.getAll()
       AppState.searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
     })

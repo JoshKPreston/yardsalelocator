@@ -78,18 +78,34 @@ export default {
               // })
 
               // NOTE change color of marker based on TAGS
+              // eslint-disable-next-line quotes
+
               let tagTemplate = ''
-              for (let i = 0; i < searchTags.length; i++) {
-                const curSearchTag = searchTags[i]
-                for (let j = 0; j < listing.tags.length; j++) {
-                  const curListTag = listing.tags[j]
-                  if (curSearchTag === curListTag) {
+              const matchingTags = []
+              // eslint-disable-next-line quotes
+              if (listing.tags.length > 0) {
+                // listing.tags.forEach(tag => {
+                //   tagTemplate += `<span id="tag_${tag}">${tag}</span> `
+                // })
+                for (let i = 0; i < searchTags.length; i++) {
+                  const curSearchTag = searchTags[i]
+                  for (let j = 0; j < listing.tags.length; j++) {
+                    const curListTag = listing.tags[j]
+                    if (curSearchTag === curListTag) {
                     // matchingArray.push(curSearchTag)
-                    tagTemplate += /* html */ `<span id="tag_${curSearchTag}" class="matching-tag">${curSearchTag}</span>`
-                  } else {
-                    tagTemplate += /* html */ `<span id="tag_${curListTag}">${curListTag}</span>`
+                    // tagTemplate += '<span id="tag_' + curSearchTag + '" class="matching-tag">' + curSearchTag + '</span>'
+                      matchingTags.push(curSearchTag)
+                    }
+                    //   tagTemplate += `<span id="tag_${curSearchTag}" class="matching-tag">${curSearchTag}</span>`
+                    // } else {
+                    // // tagTemplate += '<span id="tag_' + curListTag + '">' + curListTag + '</span>'
+                    //   tagTemplate += `<span id="tag_${curListTag}">${curListTag}</span>`
+                    // }
                   }
                 }
+                const nonMatchingTags = listing.tags.filter(tag => !matchingTags.includes(tag))
+                matchingTags.forEach(tag => { tagTemplate += `<span id="tag_${tag}" class="matching-tag">${tag}</span> ` })
+                nonMatchingTags.forEach(tag => { tagTemplate += `<span id="tag_${tag}">${tag}</span> ` })
               }
 
               // eslint-disable-next-line quotes

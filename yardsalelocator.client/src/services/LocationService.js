@@ -43,6 +43,8 @@ class LocationService {
       AppState.userLocation.longitude = res.data.addresses[0].longitude
       AppState.userLocation.distance = newAddress.distance
       AppState.userLocation.formattedAddress = res.data.addresses[0].formattedAddress
+      window.localStorage.setItem('latitude', JSON.stringify(AppState.userLocation.latitude))
+      window.localStorage.setItem('longitude', JSON.stringify(AppState.userLocation.longitude))
       // AppState.userLocation.distance = newAddress.distance
       // eslint-disable-next-line no-console
       console.log(AppState.userLocation)
