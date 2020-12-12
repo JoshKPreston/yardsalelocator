@@ -83,7 +83,7 @@ export default {
               let tagTemplate = ''
               const matchingTags = []
               // eslint-disable-next-line quotes
-              if (listing.tags.length > 0) {
+              if (listing.tags.length > 0 && searchTags) {
                 // listing.tags.forEach(tag => {
                 //   tagTemplate += `<span id="tag_${tag}">${tag}</span> `
                 // })

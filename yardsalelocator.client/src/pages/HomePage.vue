@@ -73,7 +73,7 @@ export default {
   components: { TagInputComponent },
   setup() {
     onMounted(async() => {
-      window.localStorage.clear()
+      await window.localStorage.clear()
       await setAuth()
       await locationService.getGeoLocation()
     })

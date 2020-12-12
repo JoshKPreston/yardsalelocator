@@ -202,6 +202,7 @@
             id="newListingStartDate"
             class="form-control"
             aria-describedby="helpId"
+            placeholder="Start Date"
           />
         </div>
         <div class="form-group col-12">
