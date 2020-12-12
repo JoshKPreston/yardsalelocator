@@ -194,6 +194,7 @@
         </div>
         <!-- start date -->
         <div class="form-group col-12">
+          <label for="newListingStartDate">Start Date</label>
           <input
             v-model="state.newListing.startDate"
             type="date"
