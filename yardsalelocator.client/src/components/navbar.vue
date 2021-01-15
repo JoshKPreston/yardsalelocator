@@ -94,7 +94,7 @@ export default {
       route,
       user: computed(() => AppState.user),
       async login() {
-        AuthService.loginWithPopup()
+        await AuthService.loginWithPopup()
         router.push({ name: 'Profile' })
       },
       async logout() {
