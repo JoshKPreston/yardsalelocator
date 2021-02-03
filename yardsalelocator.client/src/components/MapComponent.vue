@@ -128,8 +128,8 @@ export default {
                   </div>
                   <!--<p>tags: ${listing.tags}</p>-->
                   <div class="d-flex justify-content-around align-items-center">
-                    <a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">
-                    <!--<a class="d-block p-2 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">-->
+                    <!--<a class="d-block p-1 text-nowrap" href="http://yard-sale-locator.herokuapp.com/#/listing/${listing.id}">-->
+                    <a class="d-block p-2 text-nowrap" href="http://localhost:8080/#/listing/${listing.id}">
                       <img class="custom-vue-img" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/vue/vue.png" alt="img" />
                       <!--<i class="fas fa-binoculars fa-2x text-primary"></i>-->
                     </a>
