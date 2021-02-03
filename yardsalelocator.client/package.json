@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "@bcwdev/auth0provider-client": "0.0.3",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "firebase": "^8.1.1",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
-    "sweetalert2": "^10.12.4",
+    "sweetalert2": "^10.14.0",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0"
   },
