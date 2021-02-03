@@ -18,6 +18,20 @@ export const AppState = reactive({
   infowindow: null
 })
 
+export function ClearAppState() {
+  AppState.profile = {}
+  AppState.userLocation = {
+    latitude: null,
+    longitude: null,
+    distance: null,
+    formattedAddress: null
+  }
+  AppState.listings = []
+  AppState.currentListing = {}
+  AppState.searchTags = []
+  AppState.markers = []
+}
+
 export const getters = reactive({
   listings: computed(() => AppState.listings.sort((a, b) => (a.distance < b.distance) ? 1 : -1))
 })
