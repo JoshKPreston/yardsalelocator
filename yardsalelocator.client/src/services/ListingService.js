@@ -6,6 +6,15 @@ class ListingService {
     try {
       const res = await api.get('api/listing')
       AppState.listings = res.data.map(d => { d.distance = '0'; return d })
+
+      await AppState.listings.forEach(listing => {
+        listingService.getDistance(AppState.userLocation, listing)
+      })
+
+      setTimeout(() => {
+        AppState.listings = AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)
+        AppState.distanceListings = AppState.listings
+      }, 500)
     } catch (error) {
       logger.error(error)
     }

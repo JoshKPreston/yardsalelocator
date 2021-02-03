@@ -18,12 +18,12 @@ export default {
     onMounted(async() => {
       await setAuth()
       await locationService.getGeoLocation()
-      await listingService.getAll()
-      AppState.userLocation.distance = await JSON.parse(window.localStorage.getItem('distance'))
-      AppState.searchTags = await JSON.parse(window.localStorage.getItem('searchTags'))
-      await AppState.listings.forEach(listing => {
-        listingService.getDistance(AppState.userLocation, listing)
-      })
+      // await listingService.getAll()
+      // AppState.userLocation.distance = await JSON.parse(window.localStorage.getItem('distance'))
+      // AppState.searchTags = await JSON.parse(window.localStorage.getItem('searchTags'))
+      // await AppState.listings.forEach(listing => {
+      //   listingService.getDistance(AppState.userLocation, listing)
+      // })
       await setTimeout(async() => {
         try {
           const google = await gmapsInit()

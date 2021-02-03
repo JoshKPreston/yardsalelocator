@@ -14,6 +14,7 @@ export const AppState = reactive({
   currentListing: {},
   searchTags: [],
   markers: [],
+  distanceListings: [],
   // currentMarker: null
   infowindow: null
 })
@@ -29,6 +30,7 @@ export function ClearAppState() {
   AppState.listings = []
   AppState.currentListing = {}
   AppState.searchTags = []
+  AppState.distanceListings = []
   AppState.markers = []
 }
 
