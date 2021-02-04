@@ -2,8 +2,8 @@
   <div class="results container-fluid justify-content-center">
     <div class="row">
       <div class="col-12 custom-height text-center w-100 align-self-center text-white">
-        <h5 v-if="distanceListings.length">
-          {{ distanceListings.length }} yard sales in your area!
+        <h5>
+          {{ listingDistance.length }} yard sales in your area!
         </h5>
       </div>
     </div>
@@ -46,8 +46,6 @@ export default {
         await setAuth()
         await locationService.getGeoLocation()
       }
-      AppState.userLocation.distance = await JSON.parse(window.localStorage.getItem('distance'))
-      AppState.searchTags = await JSON.parse(window.localStorage.getItem('searchTags'))
       await listingService.getAll()
       AppState.searchTags = JSON.parse(window.localStorage.getItem('searchTags'))
     })
@@ -57,9 +55,7 @@ export default {
       // listings: computed(() => AppState.listings.sort((a, b) => (a.distance > b.distance) ? 1 : -1)),
       listings: computed(() => getters.listings),
       searchTags: computed(() => AppState.searchTags),
-      // listingDistance: computed(() => AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)),
-      listingDistance: computed(() => AppState.listings),
-      distanceListings: computed(() => AppState.distanceListings),
+      listingDistance: computed(() => AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)),
       viewListing(id) {
         router.push({ name: 'Listing', params: { listingId: id } })
       }

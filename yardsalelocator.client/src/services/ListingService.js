@@ -6,15 +6,6 @@ class ListingService {
     try {
       const res = await api.get('api/listing')
       AppState.listings = res.data.map(d => { d.distance = '0'; return d })
-
-      await AppState.listings.forEach(listing => {
-        listingService.getDistance(AppState.userLocation, listing)
-      })
-
-      setTimeout(() => {
-        AppState.listings = AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)
-        AppState.distanceListings = AppState.listings
-      }, 1000)
     } catch (error) {
       logger.error(error)
     }
@@ -33,7 +24,6 @@ class ListingService {
     try {
       // eslint-disable-next-line no-console
       // console.log(origin)
-      // test
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
       // destination.distance = res.data.routes.car.distance.text
 
