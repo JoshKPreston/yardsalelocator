@@ -24,6 +24,7 @@ class ListingService {
     try {
       // eslint-disable-next-line no-console
       // console.log(origin)
+      // test
       const res = await radarApi.get('route/distance/?origin=' + origin.latitude + '%2C' + origin.longitude + '&destination=' + destination.lat + '%2C' + destination.long + '&modes=car&units=imperial')
       // destination.distance = res.data.routes.car.distance.text
 
