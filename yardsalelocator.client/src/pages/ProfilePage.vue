@@ -198,7 +198,7 @@
           <label for="newListingStartDate">Start Date</label>
           <input
             v-model="state.newListing.startDate"
-            type="text"
+            type="date"
             name="newListingStartDate"
             :min="new Date().toISOString().split('T')[0]"
             id="newListingStartDate"
