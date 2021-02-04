@@ -14,7 +14,7 @@ class ListingService {
       setTimeout(() => {
         AppState.listings = AppState.listings.filter(listing => listingService.feetCheck(listing) <= AppState.userLocation.distance)
         AppState.distanceListings = AppState.listings
-      }, 500)
+      }, 1000)
     } catch (error) {
       logger.error(error)
     }
